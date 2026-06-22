@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Portal | Admin Panel</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui;
+            background: linear-gradient(-45deg, #0A2540, #1E3A8A, #0b62c5, #0A2540);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            color: #ccc;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 18px;
+            background: rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+        }
+
+        .navbar a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        table {
+           width: 100%;
+           border-collapse: separate;
+           border-spacing: 0;
+           background: rgba(0,0,0,0.6);
+           table-layout: fixed;
+           border-radius: 18px;
+           overflow: hidden;
+
+           box-shadow:
+           0 0 15px rgb(0,0,0),
+           0 0 30px rgb(0,0,0);
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        td:nth-child(8) {
+            max-width: 250px;
+        }
+
+        th {
+            background: rgba(14,165,233,0.2);
+        }
+
+        button {
+            padding: 8px 14px;
+            background: #0EA5E9;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ✅ ADMIN HEADING STYLE */
+h2{
+    width:fit-content;
+    margin:20px auto 30px;
+    padding:14px 35px;
+    border-left:6px solid #0EA5E9;
+    background:rgba(255,255,255,.05);
+    color:white;
+    font-size:30px;
+    border-radius:10px;
+    letter-spacing:2px;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  transition: none; /* important: avoid conflict */
+}
+
+/* normal state */
+body {
+  transform: translateX(0);
+}
+
+/* exit animation (now sliding) */
+body.fade-out {
+  animation: slideOut 0.1s ease forwards;
+}
+
+/* optional: entry animation */
+body {
+  animation: slideIn 0.1s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+    </style>
+
+<script>
+(function () {
+
+    function logoutAndRedirect() {
+        sessionStorage.removeItem("activeSession");
+        window.location.replace("Admin.html");
+    }
+
+    function checkAuth() {
+        if (sessionStorage.getItem("activeSession") !== "true") {
+            logoutAndRedirect();
+        }
+    }
+
+    // Initial check
+    checkAuth();
+
+    // Detect back/forward cache restore (THIS is key)
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            logoutAndRedirect();
+        }
+    });
+
+    // When tab becomes active again
+    window.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "visible") {
+            checkAuth();
+        }
+    });
+
+    // Hard navigation trap (best effort)
+    window.addEventListener("beforeunload", function () {
+        sessionStorage.removeItem("activeSession");
+    });
+
+})();
+</script>
+
+</head>
+
+<body class="fade-out">
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="About us.html">About</a>
+    <a href="Achievements.html">Achievements</a>
+    <a href="Events.html">Events</a>
+    <a href="Details Form.html">Contact</a>
+    <a href="Admin.html">Admin</a>
+</div>
+
+<div class="container">
+
+    <h2>🛡️ ADMIN DASHBOARD</h2>
+
+    <button onclick="logout()">Logout</button> 
+
+    <br><br>
+
+    <table id="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Cell</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Gender</th>
+                <th>Date</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody id="body"></tbody>
+    </table>
+
+</div>
+
+<!-- MODAL -->
+<div id="messageModal" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+">
+
+    <div style="
+        background:#0A2540;
+        padding:20px;
+        border-radius:10px;
+        width:60%;
+        color:#fff;
+        max-height: 80vh;
+        overflow-y: auto;
+    ">
+        <h3>Full Message</h3>
+
+        <p id="modalText" style="
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        "></p>
+
+        <button onclick="closeModal()" style="
+            margin-top:10px;
+            background:#0EA5E9;
+            border:none;
+            padding:8px 14px;
+            color:white;
+            border-radius:6px;
+        ">Close</button>
+    </div>
+</div>
+
+<script>
+
+function openModal(msg) {
+    document.getElementById("modalText").innerText = msg;
+    document.getElementById("messageModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("messageModal").style.display = "none";
+}
+
+async function loadData() {
+    const res = await fetch("http://localhost:3000/api/users-data");
+    const data = await res.json();
+
+    const body = document.getElementById("body");
+
+    data.forEach(item => {
+
+        const msg = item.Message || "";
+
+        body.innerHTML += `
+            <tr>
+                <td>${item.Name}</td>
+                <td>${item.Surname}</td>
+                <td>${item.Cell}</td>
+                <td>${item.Email}</td>
+                <td>${item.Address}</td>
+                <td>${item.Gender}</td>
+                <td>${item.Date}</td>
+                <td>
+                    ${
+                        msg.length > 15
+                        ? msg.substring(0, 15) + 
+                          `... <a href="#" style="color:#0EA5E9;" onclick="openModal(\`${msg.replace(/`/g,'')}\`)">Read more</a>`
+                        : msg
+                    }
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function logout() {
+
+    // 🔥 THIS IS THE IMPORTANT FIX
+    sessionStorage.removeItem("activeSession");
+    sessionStorage.removeItem("adminRole");
+
+    localStorage.removeItem("adminAuth");
+
+    // prevents back-button restore reuse
+    window.location.replace("Admin.html");
+}
+
+/* ---------------- AUTO BLOCK IF NO SESSION ---------------- */
+(function () {
+
+    function checkAuth() {
+        if (sessionStorage.getItem("activeSession") !== "true") {
+            window.location.replace("Admin.html");
+        }
+    }
+
+    checkAuth();
+
+    // 🔥 prevents back button cache bypass
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            checkAuth();
+        }
+    });
+
+})();
+
+/* ---------------- INIT ---------------- */
+loadData();
+
+</script>
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.remove("fade-out");
+});
+
+// Intercept link clicks
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+
+    // ignore external links / anchors
+    if (!href || href.startsWith("#") || href.startsWith("http")) return;
+
+    e.preventDefault();
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 100); // match CSS duration
+  });
+});
+</script>
+
+</body>
+</html>

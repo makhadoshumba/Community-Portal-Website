@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Portal | Achievements</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui;
+            background: linear-gradient(-45deg, #0A2540, #1E3A8A, #0b62c5, #0A2540);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            color: #ccc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 18px;
+            background: rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            color: #0EA5E9;
+        }
+
+        /* MAIN */
+        .container {
+            flex: 1;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .container h1 {
+            color: #ffffff;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .container p {
+            color: #aaa;
+        }
+
+        /* ACHIEVEMENT ROW (NO CARD STYLE) */
+        .achievement {
+            display: flex;
+
+            gap: 20px;
+            width: 90%;
+            margin: 25px auto;
+        }
+
+        .achievement img {
+            width: 450px;
+            height: 490px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .achievement-text {
+            text-align: left;
+        }
+
+        .achievement-text h3 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .achievement-text p {
+            margin-top: 6px;
+            color: #ccc;
+            font-size: 18px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: rgba(0,0,0,0.7);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer a {
+            color: #0EA5E9;
+            text-decoration: none;
+        }
+
+        .achievements {
+            display: flex;
+            gap: 20px;
+            width: 90%;
+            margin: 25px auto;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row-reverse;
+        }
+
+        .achievements img {
+            width: 450px;
+            height: 490px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .achievements-text {
+            text-align: left;
+        }
+
+        .achievements-text h3 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .achievements-text p {
+            margin-top: 6px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+.faq-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* FAQ icon */
+.faq-section summary i {
+    margin-right: 8px;
+    color: #0EA5E9;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+details:hover summary i {
+    transform: rotate(10deg);
+    color: #0EA5E9;
+}
+
+@keyframes floatIcon {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Main icon */
+.contact-cards  .icon {
+    font-size: 28px;
+    color: #0EA5E9;
+    margin-bottom: 10px;
+    display: inline-block;
+    transition: 0.3s ease;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    color: #0EA5E9;
+    font-family: system-ui;
+    font-size: 14px;
+    z-index: 9999;
+    min-width: 220px;
+
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.faq-section h2,
+.faq-section summary,
+.faq-section p {
+    color: #0EA5E9;
+}
+
+.contact-hero {
+    text-align: center;
+    padding: 40px 20px;
+    color: #ccc;
+}
+
+.contact-hero h1 {
+    font-size: 42px;
+    margin: 0;
+    color: #ffffff;
+    font-family: system-ui;
+    letter-spacing: 2px;
+}
+
+.contact-hero p {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #aaa;
+    font-family: system-ui;
+}
+
+.contact-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+}
+
+.cards {
+    padding: 20px;
+    border-radius: 10px;
+    width: 220px;
+    text-align: center;
+    color: #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.cards h3 {
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.footer a {
+color: #0EA5E9;
+text-decoration: none;
+}
+
+.ticker-wrapper {
+  position: fixed;
+  top: 56px; /* navbar height */
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.track {
+  display: flex;
+  gap: 40px;
+  white-space: nowrap;
+  animation: move 13s linear infinite;
+}
+
+@keyframes move {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  transition: none; /* important: avoid conflict */
+}
+
+/* normal state */
+body {
+  transform: translateX(0);
+}
+
+/* exit animation (now sliding) */
+body.fade-out {
+  animation: slideOut 0.1s ease forwards;
+}
+
+/* optional: entry animation */
+body {
+  animation: slideIn 0.1s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+    </style>
+</head>
+
+<body class="fade-out">
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="About us.html">About</a>
+    <a href="Achievements.html">Achievements</a>
+    <a href="Events.html">Events</a>
+    <a href="Details Form.html">Contact</a>
+    <a href="Admin.html">Admin</a>
+</div>
+
+<div class="ticker-wrapper">
+  <div class="ticker">
+    <div class="track">
+    <span>📰 Breaking: Water maintenance scheduled for tommorow at 10:00</span>
+    <span>🌍 Weather alert issued on Instagram</span>
+    <span>⚽ Bafana Bafana draw with Czech 1-1</span>
+    <span>💡 No Loadshedding scheduled for the next 3 months</span>
+
+    <span>📰 Breaking: Water maintenance scheduled for tommorow at 10:00</span>
+    <span>🌍 Weather alert issued on Instagram</span>
+    <span>⚽ Bafana Bafana draw with Czech 1-1</span>
+    <span>💡 No Loadshedding scheduled for the next 3 months</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+    <h1>Community Achievements</h1>
+    <p>Celebrating milestones, progress, and impact across Mondeor</p>
+
+    <br>
+    <br>
+
+<!-- 1 -->
+<div class="achievement">
+    <img src="bafana bafan.jpg">
+    <div class="achievement-text">
+        <h3>⚽ Bafana Bafana World Cup Qualification</h3>
+        <p>
+            The qualification of Bafana Bafana for the FIFA World Cup stands as one of the most defining sporting achievements in South Africa’s modern football history. After years of inconsistency, restructuring, and rebuilding phases within the national team setup, this milestone represents a turning point in how South African football is perceived both locally and internationally. The journey to qualification was not a simple one; it involved overcoming strong opposition across the African qualification stages, dealing with pressure from fans and media, and rebuilding confidence within a squad that has historically struggled to maintain long-term consistency. For communities such as Mondeor, this achievement is deeply meaningful because it reflects the possibility of local talent reaching global platforms.
+        </p>
+        <p>
+            Beyond the celebration, this achievement highlights the importance of long-term investment in football development structures across the country. Many of the players in the squad came through local school leagues, township academies, and regional development programs, proving that South Africa has a strong foundation of raw talent that can be nurtured into elite performance. 
+        </p>
+    </div>
+</div>
+
+<br>
+<!-- 2 -->
+<div class="achievements">
+    <img src="highschool.png">
+    <div class="achievement-text">
+        <h3>🎓 Academic Excellence in Mondeor Schools</h3>
+        <p>
+            Academic performance within Mondeor schools has undergone a significant transformation, marked by a steady increase in learners achieving distinctions across core academic subjects. This improvement is not accidental but rather the result of years of structured academic planning, dedicated teaching staff, and a growing culture of discipline and ambition among students. Schools have implemented more focused learning strategies, extended study sessions, and targeted intervention programs for learners who require additional academic support. These combined efforts have helped raise overall performance standards and positioned Mondeor as a community that values education as a foundation for future success.
+        </p>
+        <p>
+            Schools are increasingly collaborating with external educational programs, mentorship initiatives, and scholarship providers to ensure that learners are not only academically successful but also prepared for real-world challenges. As a result, Mondeor is steadily developing a reputation as an educationally driven community producing competitive and capable future professionals.
+        </p>
+    </div>
+</div>
+
+<br>
+<!-- 3 -->
+<div class="achievement">
+    <img src="house.jpg">
+    <div class="achievement-text">
+        <h3>🏡 Rising Property Values in Mondeor</h3>
+        <p>
+            The steady increase in property values within Mondeor reflects broader patterns of urban development, improved infrastructure, and growing residential demand in the area. Over the past several years, the suburb has undergone noticeable transformation, with better-maintained roads, improved municipal services, and increased private sector investment contributing to its rising desirability. Homebuyers and investors are increasingly viewing Mondeor as a stable, strategically located suburb that offers both convenience and long-term value appreciation. This shift in perception has created a competitive housing market where demand often exceeds available supply.
+        </p>
+        <p>
+            This growth has had significant ripple effects on the local economy and community structure. Long-term homeowners have seen substantial increases in property equity, while new developments have introduced modern housing designs and upgraded residential facilities. The rise in property value has also encouraged improvements in surrounding infrastructure such as retail centers, schools, and transport services, creating a more integrated and functional urban environment. 
+        </p>
+    </div>
+</div>
+
+<br>
+<!-- 4 -->
+<div class="achievements">
+    <img src="pic1.png">
+    <div class="achievement-text">
+        <h3>🏑 Girls Hockey Team National Success</h3>
+        <p>
+            The success of Mondeor’s girls hockey teams at national level competitions represents a major achievement in school sports development and youth athletic excellence. These teams have demonstrated exceptional commitment, discipline, and teamwork over several competitive seasons, allowing them to qualify and compete against some of the strongest school hockey programs in the country. Their journey reflects not only individual talent but also the strength of coaching programs, school support structures, and community encouragement that have helped shape their success.
+        </p>
+        <p>
+            This achievement carries broader social significance as it highlights the increasing opportunities available to young female athletes in competitive sports. It challenges traditional barriers and encourages equal participation in school athletics, inspiring younger students to engage in structured sports programs from an early age. The success of these teams has also led to greater visibility for women’s sports within the community, attracting attention from regional selectors and sports development organizations. As a result, Mondeor is becoming recognized as a nurturing ground for disciplined, competitive, and nationally capable young athletes.
+        </p>
+    </div>
+</div>
+
+<br>
+<!-- 5 -->
+<div class="achievement">
+    <img src="kliprivier.png">
+    <div class="achievement-text">
+        <h3>🌿 Klipriviersberg Nature Reserve Recognition</h3>
+        <p>
+            The Klipriviersberg Nature Reserve has established itself as one of Gauteng’s most significant natural and ecological landmarks, attracting visitors, researchers, and outdoor enthusiasts from across the region. Its unique combination of natural landscapes, wildlife biodiversity, and historical heritage sites makes it an important conservation area within an otherwise highly urbanized environment. Over time, it has grown in popularity as both a recreational destination and an educational resource, offering guided hikes, nature trails, and opportunities for environmental learning.
+        </p>
+        <p>
+            The increased recognition of the reserve has strengthened conservation awareness and contributed to the growth of eco-tourism in the region. Environmental organizations and local authorities have implemented initiatives aimed at preserving its natural ecosystems while improving accessibility for visitors. These efforts have helped maintain the balance between conservation and public engagement, ensuring that future generations can continue to benefit from its presence. The reserve also plays a symbolic role for surrounding communities, representing the importance of preserving natural heritage within rapidly developing urban areas.
+        </p>
+    </div>
+</div>
+
+</div>
+
+<br>
+
+<div class="contact-cards">
+
+    <div class="cards">
+        <i class="fa-solid fa-location-dot icon"></i>
+        <h3>Location</h3>
+        <p>Mondeor, Johannesburg, South Africa</p>
+    </div>
+
+    <div class="cards">
+        <i class="fa-solid fa-envelope icon"></i>
+        <h3>Email</h3>
+        <p>support@community.com</p>
+    </div>
+
+    <div class="cards">
+        <i class="fa-solid fa-phone icon"></i>
+        <h3>Phone</h3>
+        <p>+27 67 943 5936</p>
+    </div>
+
+</div>
+
+<br>
+
+<div class="faq-section">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+        <summary><i class="fa-solid fa-clock"></i> How long does it take to respond?</summary>
+        <p>We usually respond within 24–48 hours.</p>
+    </details>
+
+    <details>
+        <summary><i class="fa-solid fa-building"></i> Can I visit your office?</summary>
+        <p>Yes, during official working hours.</p>
+    </details>
+
+    <details>
+        <summary><i class="fa-solid fa-circle-question"></i> Is this service free?</summary>
+        <p>Yes, it is a community-based service.</p>
+    </details>
+
+</div>
+
+<br>
+
+<br>
+
+<div class="footer">
+    <p>© 2026 Mondeor Community Portal | Built for the community</p>
+    <p>
+        Contact: <a href="mailto:support@community.com">support@community.com</a>
+    </p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>© 2026 Mondeor Community Portal | Built for the community</p>
+    <p><a href="mailto:support@community.com">support@community.com</a></p>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.remove("fade-out");
+});
+
+// Intercept link clicks
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+
+    // ignore external links / anchors
+    if (!href || href.startsWith("#") || href.startsWith("http")) return;
+
+    e.preventDefault();
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 100); // match CSS duration
+  });
+});
+</script>
+
+</body>
+</html>

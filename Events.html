@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Portal | Events</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui;
+            background: linear-gradient(-45deg, #0A2540, #1E3A8A, #0b62c5, #0A2540);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            color: #ccc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 18px;
+            background: rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            color: #0EA5E9;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 50px 20px 20px;
+        }
+
+        .hero h1 {
+            color: #ffffff;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #aaa;
+        }
+
+        /* CATEGORY BAR */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .cat {
+            padding: 8px 14px;
+            border: 1px solid #ffffff67;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .cat:hover {
+            background: #ffffff67;
+            color: black;
+        }
+
+        /* MAIN */
+        .container {
+            flex: 1;
+            padding: 20px 20px 60px;
+            text-align: center;
+        }
+
+        #search {
+            padding: 10px;
+            width: 60%;
+            border-radius: 8px;
+            border: 1px solid #0EA5E9;
+            background: rgba(0,0,0,0.5);
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        /* GRID */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+        /* CARD */
+        .card {
+            background: rgba(0,0,0,0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(14,165,233,0.4);
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 0 18px #0EA5E9;
+        }
+
+        .card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .card-content h3 {
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .card-content p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #aaa;
+            margin: 10px 0;
+        }
+
+        .badge {
+            background: #0EA5E9;
+            color: black;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .transparent-btn {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffffff67;
+            background: transparent;
+            color: #ffffff67;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .transparent-btn:hover {
+            background: #ffffff67;
+            color: black;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: rgba(0,0,0,0.7);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer a {
+            color: #0EA5E9;
+            text-decoration: none;
+        }
+
+        .faq-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* FAQ icon */
+.faq-section summary i {
+    margin-right: 8px;
+    color: #0EA5E9;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+details:hover summary i {
+    transform: rotate(10deg);
+    color: #0EA5E9;
+}
+
+@keyframes floatIcon {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Main icon */
+.contact-cards  .icon {
+    font-size: 28px;
+    color: #0EA5E9;
+    margin-bottom: 10px;
+    display: inline-block;
+    transition: 0.3s ease;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    color: #0EA5E9;
+    font-family: system-ui;
+    font-size: 14px;
+    z-index: 9999;
+    min-width: 220px;
+
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.faq-section h2,
+.faq-section summary,
+.faq-section p {
+    color: #0EA5E9;
+}
+
+.contact-hero {
+    text-align: center;
+    padding: 40px 20px;
+    color: #ccc;
+}
+
+.contact-hero h1 {
+    font-size: 42px;
+    margin: 0;
+    color: #ffffff;
+    font-family: system-ui;
+    letter-spacing: 2px;
+}
+
+.contact-hero p {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #aaa;
+    font-family: system-ui;
+}
+
+.contact-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+}
+
+.cards {
+    padding: 20px;
+    border-radius: 10px;
+    width: 220px;
+    text-align: center;
+    color: #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.cards h3 {
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  transition: none; /* important: avoid conflict */
+}
+
+/* normal state */
+body {
+  transform: translateX(0);
+}
+
+/* exit animation (now sliding) */
+body.fade-out {
+  animation: slideOut 0.1s ease forwards;
+}
+
+/* optional: entry animation */
+body {
+  animation: slideIn 0.1s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+</style>
+
+</head>
+
+<body class="fade-out">
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="About us.html">About</a>
+    <a href="Achievements.html">Achievements</a>
+    <a href="Events.html">Events</a>
+    <a href="Details Form.html">Contact</a>
+    <a href="Admin.html">Admin</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Explore the latest events and things to do</h1>
+    <p>Discover community events, concerts, sports & experiences near you</p>
+</div>
+
+<!-- CATEGORY BAR -->
+<div class="categories">
+    <div class="cat" onclick="filterCategory('all')">All</div>
+    <div class="cat" onclick="filterCategory('music')">Music</div>
+    <div class="cat" onclick="filterCategory('sports')">Sports</div>
+    <div class="cat" onclick="filterCategory('community')">Community</div>
+    <div class="cat" onclick="filterCategory('nature')">Nature</div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+    <input type="text" id="search" placeholder="Search events...">
+    <p id="noResults" style="display:none; color:#aaa; margin-top:23px; font-size: 20px;">
+    No events found 
+    </p>
+
+    <div class="events-grid">
+
+        <!-- EXISTING + NEW EVENTS -->
+         <div class="card event paid" data-name="sunset music festival" data-category="music">
+            <img src="munro-drive.jpg">
+            <div class="card-content" data-category="music">
+                <h3>Houghton Sunset Music Festival</h3>
+                <p>Chill music, DJs & sunset vibes experience.</p>
+                <div class="event-meta"><span> 30 Nov</span><span> R300</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+        <div class="card event paid" data-name="jazz festival" data-category="music">
+            <img src="jazz night.jpg">
+            <div class="card-content" data-category="music">
+                <h3>Jazz festival</h3>
+                <p>Tranquility for the ears. Join us at the great Jazz Festival.</p>
+                <div class="event-meta"><span> 5 Nov</span><span> R250</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+        <div class="card event paid" data-name="wunna run by gunna" data-category="sports">
+            <img src="wunna run.png">
+            <div class="card-content" data-category="sports">
+                <h3>Wunna Run by Gunna</h3>
+                <p>Don't miss the experience of running with Gunna.</p>
+                <div class="event-meta"><span> 30 Nov</span><span> R300</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+
+        <div class="card event paid" data-name="tech expo johannesburg" data-category="tech">
+            <img src="aws.png">
+            <div class="card-content">
+                <h3>AWS Summit 2026</h3>
+                <p>Latest innovations, startups & AI showcases.</p>
+                <div class="event-meta"><span> 19 Aug</span><span> free</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+        <div class="card event free" data-name="community clean up" data-category="community">
+            <img src="community cleanup.jpg">
+            <div class="card-content">
+                <h3>Community Clean-Up Day</h3>
+                <p>Help make Mondeor cleaner and greener together.</p>
+                <div class="event-meta"><span> 18 Aug</span><span> Free</span></div>
+                <button class="transparent-btn">Join Event</button>
+            </div>
+        </div>
+
+        <div class="card event paid" data-name="food festival johannesburg" data-category="food">
+            <img src="Kota festival.jpg">
+            <div class="card-content">
+                <h3>Kota Festival</h3>
+                <p>Street food, gourmet stalls & live cooking shows.</p>
+                <div class="event-meta"><span> 1 Dec</span><span> R200</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+
+        <div class="card event free" data-name="absa run for good" data-category="sports">
+            <img src="ABSA.jpg">
+            <div class="card-content">
+                <h3>ABSA Run for Good</h3>
+                <p>Community fitness event promoting health and unity.</p>
+                <div class="event-meta"><span> 15 Aug</span><span> R225</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+        <div class="card event paid" data-name="nature day event" data-category="nature">
+            <img src="jcloe.jpg">
+            <div class="card-content" data-category="music">
+                <h3>J. Cole Live</h3>
+                <p>International concert experience live in Johannesburg.</p>
+                <div class="event-meta"><span> 22 Sep</span><span> R850</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+        <div class="card event paid" data-name="nature day event" data-category="nature">
+            <img src="walter.jpg">
+            <div class="card-content">
+                <h3>Nature Day Event</h3>
+                <p>Outdoor conservation and family picnic experience.</p>
+                <div class="event-meta"><span> 5 Oct</span><span> R50</span></div>
+                <button class="transparent-btn">Buy Ticket</button>
+            </div>
+        </div>
+
+        <!-- NEW EVENTS ADDED -->
+
+    </div>
+</div>
+
+<br>
+
+<div class="contact-cards">
+
+    <div class="cards">
+        <i class="fa-solid fa-location-dot icon"></i>
+        <h3>Location</h3>
+        <p>Mondeor, Johannesburg, South Africa</p>
+    </div>
+
+    <div class="cards">
+        <i class="fa-solid fa-envelope icon"></i>
+        <h3>Email</h3>
+        <p>support@community.com</p>
+    </div>
+
+    <div class="cards">
+        <i class="fa-solid fa-phone icon"></i>
+        <h3>Phone</h3>
+        <p>+27 67 943 5936</p>
+    </div>
+
+</div>
+
+<br>
+
+<div class="faq-section">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+        <summary><i class="fa-solid fa-clock"></i> How long does it take to respond?</summary>
+        <p>We usually respond within 24–48 hours.</p>
+    </details>
+
+    <details>
+        <summary><i class="fa-solid fa-building"></i> Can I visit your office?</summary>
+        <p>Yes, during official working hours.</p>
+    </details>
+
+    <details>
+        <summary><i class="fa-solid fa-circle-question"></i> Is this service free?</summary>
+        <p>Yes, it is a community-based service.</p>
+    </details>
+
+</div>
+
+<br>
+
+<br>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>© 2026 Mondeor Community Portal | Built for the community</p>
+    <p><a href="mailto:support@community.com">support@community.com</a></p>
+</div>
+
+<script>
+const cards = document.querySelectorAll(".card.event");
+const searchInput = document.getElementById("search");
+
+// optional: create this in HTML (if not already)
+const noResults = document.getElementById("noResults");
+
+let activeCategory = "all";
+
+/* =========================
+   MAIN FILTER FUNCTION
+========================= */
+function applyFilters() {
+    const searchValue = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const name = (card.getAttribute("data-name") || "").toLowerCase();
+        const title = card.querySelector("h3")?.innerText.toLowerCase() || "";
+        const category = card.getAttribute("data-category") || "all";
+
+        const matchesSearch =
+            name.includes(searchValue) || title.includes(searchValue);
+
+        const matchesCategory =
+            activeCategory === "all" || category === activeCategory;
+
+        if (matchesSearch && matchesCategory) {
+            card.style.display = "";
+            visibleCount++;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    // show / hide "no results"
+    if (noResults) {
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+}
+
+/* =========================
+   SEARCH INPUT
+========================= */
+searchInput.addEventListener("keyup", applyFilters);
+
+/* =========================
+   CATEGORY FILTER
+   (called from onclick)
+========================= */
+function filterCategory(category) {
+    activeCategory = category;
+    applyFilters();
+}
+
+/* =========================
+   OPTIONAL: reset to ALL on load
+========================= */
+window.onload = () => {
+    activeCategory = "all";
+    applyFilters();
+};
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.remove("fade-out");
+});
+
+// Intercept link clicks
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+
+    // ignore external links / anchors
+    if (!href || href.startsWith("#") || href.startsWith("http")) return;
+
+    e.preventDefault();
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 100); // match CSS duration
+  });
+});
+</script>
+
+</body>
+</html>

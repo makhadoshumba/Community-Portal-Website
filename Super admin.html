@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Community Portal | Super Admin</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <style>
+    body {
+        margin: 0;
+        font-family: system-ui;
+        background: linear-gradient(-45deg, #0A2540, #1E3A8A, #0EA5E9, #0A2540);
+        background-size: 400% 400%;
+        animation: gradientMove 10s ease infinite;
+        color: #ccc;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* NAVBAR */
+    .navbar {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        padding: 14px;
+        background: rgba(0,0,0,0.6);
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(10px);
+        flex-wrap: wrap;
+    }
+
+    .navbar a {
+        color: #ccc;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .navbar a:hover {
+        color: #0EA5E9;
+    }
+
+    /* MAIN */
+    .container {
+        flex: 1;
+        padding: 30px 10px;
+        text-align: center;
+    }
+
+    /* CARD (NO OVERFLOW) */
+    .card {
+        background: rgba(0,0,0,0.7);
+        padding: 15px;
+        margin: 20px auto;
+        width: 95%;
+        max-width: 1200px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px #0EA5E9;
+    }
+
+    /* STATS */
+    .stats {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        width: 180px;
+        background: rgba(0,0,0,.7);
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 0 10px #0EA5E9;
+    }
+
+    .stat-card h3 {
+        margin: 0;
+        color: #0EA5E9;
+        font-size: 13px;
+    }
+
+    .stat-card p {
+        font-size: 28px;
+        color: white;
+        margin: 10px 0 0;
+    }
+
+    /* SEARCH (FIX OVERFLOW) */
+    .searchBox {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 12px 0;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        background: #1b1b1b;
+        color: white;
+        font-size: 14px;
+    }
+
+    /* TABLE (NO FIXED MIN WIDTH) */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed; /* important */
+        font-size: 12px;
+    }
+
+    th {
+        background: #0EA5E9;
+        color: white;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 8px;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    tr:hover {
+        background: rgba(255,255,255,.05);
+    }
+
+    /* ACTIONS */
+    .actions {
+        width: 90px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .editBtn,
+    .deleteBtn {
+        border: none;
+        padding: 6px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        font-size: 11px;
+    }
+
+    .editBtn { background: #0EA5E9; }
+    .deleteBtn { background: #d9534f; }
+
+    .editBtn:hover,
+    .deleteBtn:hover {
+        opacity: 0.9;
+    }
+
+    /* FOOTER (RESTORED) */
+    .footer {
+        background: rgba(0,0,0,0.7);
+        text-align: center;
+        padding: 15px;
+        font-size: 13px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer a {
+        color: #0EA5E9;
+        text-decoration: none;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+
+        .stat-card {
+            width: 45%;
+        }
+
+        table {
+            font-size: 11px;
+        }
+
+        .editBtn,
+        .deleteBtn {
+            padding: 5px;
+            font-size: 10px;
+        }
+    }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  transition: none; /* important: avoid conflict */
+}
+
+/* normal state */
+body {
+  transform: translateX(0);
+}
+
+/* exit animation (now sliding) */
+body.fade-out {
+  animation: slideOut 0.1s ease forwards;
+}
+
+/* optional: entry animation */
+body {
+  animation: slideIn 0.1s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+</style>
+
+<script>
+(function () {
+
+    function logoutAndRedirect() {
+        sessionStorage.removeItem("activeSession");
+        window.location.replace("Admin.html");
+    }
+
+    function checkAuth() {
+        if (sessionStorage.getItem("activeSession") !== "true") {
+            logoutAndRedirect();
+        }
+    }
+
+    // Initial check
+    checkAuth();
+
+    // Detect back/forward cache restore (THIS is key)
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            logoutAndRedirect();
+        }
+    });
+
+    // When tab becomes active again
+    window.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "visible") {
+            checkAuth();
+        }
+    });
+
+    // Hard navigation trap (best effort)
+    window.addEventListener("beforeunload", function () {
+        sessionStorage.removeItem("activeSession");
+    });
+
+})();
+
+
+</script>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+
+<body class="fade-out">
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="About us.html">About</a>
+    <a href="Achievements.html">Achievements</a>
+    <a href="Events.html">Events</a>
+    <a href="Details Form.html">Contact</a>
+    <a href="Admin.html">Admin</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <h1 style="color:white; margin-bottom:30px;">
+        Super Admin Dashboard
+    </h1>
+
+    <!-- Statistics -->
+    <div class="stats">
+
+        <div class="stat-card">
+            <h3>Total Admins</h3>
+            <p id="totalAdmins">0</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Form Submissions</h3>
+            <p id="totalForms">0</p>
+        </div>
+
+    </div>
+
+    <!-- ================= ADMIN TABLE ================= -->
+    <div class="card">
+    <div style="
+     display: grid;
+     grid-template-columns: 1fr auto 1fr;
+     align-items: center;
+     margin-bottom: 10px;"
+     >
+
+    <!-- left spacer -->
+    <div></div>
+
+    <!-- centered title -->
+    <h2 style="margin:0; text-align:center;">
+        Admin Management
+    </h2>
+
+    <!-- right button -->
+    <div style="display:flex; justify-content:flex-end;">
+        <button class="editBtn" onclick="addAdmin()">
+            + Add Admin
+        </button>
+    </div>
+
+</div>              
+
+        <input type="text" id="adminSearch" placeholder="Search admin name..." class="searchBox">
+
+        <table id="adminTable">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th class="actions">Edit</th>
+                    <th class="actions">Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="6">Loading...</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- ================= FORM TABLE ================= -->
+    <div class="card">
+
+        <h2>Contact Form Submissions</h2>
+
+        <input type="text" id="formSearch" placeholder="Search name, surname, number in forms..." class="searchBox">
+
+        <table id="formTable">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Cell</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>Date</th>
+                    <th>Message</th>
+                    <th class="actions">Edit</th>
+                    <th class="actions">Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="11">Loading...</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>© 2026 Mondeor Community Portal | Built for the community</p>
+    <p>
+        Contact: <a href="mailto:support@community.com">support@community.com</a>
+    </p>
+</div>
+
+<script>
+
+// ================= INITIAL LOAD =================
+document.addEventListener("DOMContentLoaded", () => {
+    loadDashboard();
+});
+
+
+// ================= LIVE ADMIN SEARCH =================
+const adminSearchInput = document.getElementById("adminSearch");
+let adminSearchTimeout;
+
+adminSearchInput.addEventListener("input", () => {
+
+    clearTimeout(adminSearchTimeout);
+
+    adminSearchTimeout = setTimeout(async () => {
+
+        const value = adminSearchInput.value.trim();
+
+        const url = value
+            ? `http://localhost:3000/api/admins/search?q=${encodeURIComponent(value)}`
+            : `http://localhost:3000/api/admins`;
+
+        const res = await fetch(url);
+        const admins = await res.json();
+
+        const adminBody = document.querySelector("#adminTable tbody");
+        adminBody.innerHTML = "";
+
+        admins.forEach(admin => {
+
+            const id = admin.ID || admin.id;
+            const username = admin.Username || admin.username || "-";
+            const password = admin.Password || admin.password || "-";
+            const role = (admin.Role || admin.role || "-").trim();
+
+            adminBody.innerHTML += `
+                <tr>
+                    <td>${id ?? "-"}</td>
+                    <td>${username}</td>
+                    <td>${password}</td>
+                    <td>${role}</td>
+
+                    <td class="actions">
+                        <button class="editBtn"
+                            onclick="editAdmin(${id}, '${username}', '${password}', '${role}')">
+                            Edit
+                        </button>
+                    </td>
+
+                    <td class="actions">
+                        ${
+                            role.toLowerCase() === "superadmin"
+                                ? "🔒"
+                                : `<button class="deleteBtn" onclick="deleteAdmin(${id})">Delete</button>`
+                        }
+                    </td>
+                </tr>
+            `;
+        });
+
+    }, 250);
+});
+
+
+// ================= LIVE FORM SEARCH =================
+const formSearchInput = document.getElementById("formSearch");
+let formSearchTimeout;
+
+formSearchInput.addEventListener("input", () => {
+
+    clearTimeout(formSearchTimeout);
+
+    formSearchTimeout = setTimeout(async () => {
+
+        const value = formSearchInput.value.trim();
+
+        const url = value
+            ? `http://localhost:3000/api/users-data/search?q=${encodeURIComponent(value)}`
+            : `http://localhost:3000/api/users-data`;
+
+        const res = await fetch(url);
+        const forms = await res.json();
+
+        const formBody = document.querySelector("#formTable tbody");
+        formBody.innerHTML = "";
+
+        forms.forEach(form => {
+
+            const id = form.ID || form.id;
+
+            const fullMessage = form.Message || "-";
+            const shortMessage = fullMessage.length > 10
+                ? fullMessage.substring(0, 10) + "..."
+                : fullMessage;
+
+            formBody.innerHTML += `
+                <tr>
+                    <td>${id ?? "-"}</td>
+                    <td>${form.Name || "-"}</td>
+                    <td>${form.Surname || "-"}</td>
+                    <td>${form.Cell || "-"}</td>
+                    <td>${form.Email || "-"}</td>
+                    <td>${form.Address || "-"}</td>
+                    <td>${form.Gender || "-"}</td>
+                    <td>${form.Date || "-"}</td>
+
+                    <td>
+                        <span id="msg-${id}" data-full="${fullMessage}">
+                            ${shortMessage}
+                        </span>
+
+                        ${fullMessage.length > 10
+                            ? `<a href="#" onclick="toggleMessage(event, ${id})">See More</a>`
+                            : ""
+                        }
+                    </td>
+
+                    <td class="actions">
+                        <button class="editBtn"
+                            onclick="editForm('${encodeURIComponent(JSON.stringify(form))}')">
+                            Edit
+                        </button>
+                    </td>
+
+                    <td class="actions">
+                        <button class="deleteBtn" onclick="deleteForm(${id})">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    }, 250);
+});
+
+
+// ================= DASHBOARD LOAD =================
+async function loadDashboard() {
+
+    try {
+
+        const adminResponse = await fetch("http://localhost:3000/api/admins");
+        const admins = await adminResponse.json();
+
+        document.getElementById("totalAdmins").textContent = admins.length;
+
+        const adminBody = document.querySelector("#adminTable tbody");
+        adminBody.innerHTML = "";
+
+        admins.forEach(admin => {
+
+            const id = admin.ID || admin.id;
+            const username = admin.Username || admin.username || "-";
+            const password = admin.Password || admin.password || "-";
+            const role = (admin.Role || admin.role || "-").trim();
+
+            adminBody.innerHTML += `
+                <tr>
+                    <td>${id ?? "-"}</td>
+                    <td>${username}</td>
+                    <td>${password}</td>
+                    <td>${role}</td>
+
+                    <td class="actions">
+                        <button class="editBtn"
+                            onclick="editAdmin(${id}, '${username}', '${password}', '${role}')">
+                            Edit
+                        </button>
+                    </td>
+
+                    <td class="actions">
+                        ${
+                            role.toLowerCase() === "superadmin"
+                                ? "🔒"
+                                : `<button class="deleteBtn" onclick="deleteAdmin(${id})">Delete</button>`
+                        }
+                    </td>
+                </tr>
+            `;
+        });
+
+
+        const formResponse = await fetch("http://localhost:3000/api/users-data");
+        const forms = await formResponse.json();
+
+        document.getElementById("totalForms").textContent = forms.length;
+
+        const formBody = document.querySelector("#formTable tbody");
+        formBody.innerHTML = "";
+
+        forms.forEach(form => {
+
+            const id = form.ID || form.id;
+
+            const fullMessage = form.Message || "-";
+            const shortMessage = fullMessage.length > 10
+                ? fullMessage.substring(0, 10) + "..."
+                : fullMessage;
+
+            formBody.innerHTML += `
+                <tr>
+                    <td>${id ?? "-"}</td>
+                    <td>${form.Name || "-"}</td>
+                    <td>${form.Surname || "-"}</td>
+                    <td>${form.Cell || "-"}</td>
+                    <td>${form.Email || "-"}</td>
+                    <td>${form.Address || "-"}</td>
+                    <td>${form.Gender || "-"}</td>
+                    <td>${form.Date || "-"}</td>
+
+                    <td>
+                        <span id="msg-${id}" data-full="${fullMessage}">
+                            ${shortMessage}
+                        </span>
+
+                        ${fullMessage.length > 10
+                            ? `<a href="#" onclick="toggleMessage(event, ${id})">See More</a>`
+                            : ""
+                        }
+                    </td>
+
+                    <td class="actions">
+                        <button class="editBtn"
+                            onclick="editForm('${encodeURIComponent(JSON.stringify(form))}')">
+                            Edit
+                        </button>
+                    </td>
+
+                    <td class="actions">
+                        <button class="deleteBtn" onclick="deleteForm(${id})">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    } catch (err) {
+        console.error("Dashboard load error:", err);
+    }
+}
+
+// ================= REQUIRED PROMPT =================
+function requiredPrompt(label, currentValue) {
+
+    while (true) {
+
+        const value = prompt(label, currentValue);
+
+        // User pressed Cancel
+        if (value === null) return null;
+
+        // Empty field
+        if (value.trim() === "") {
+            alert(label + " cannot be empty.");
+            continue;
+        }
+
+        return value.trim();
+    }
+
+}
+
+
+// ================= ADMIN FUNCTIONS =================
+async function deleteAdmin(id){
+
+    if(!confirm("Delete this admin?")) return;
+
+    const res = await fetch(`http://localhost:3000/api/admins/${id}`, {
+        method: "DELETE"
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        alert("Admin deleted");
+        loadDashboard();
+    } else {
+        alert(data.message || "Failed to delete admin");
+    }
+}
+
+async function editAdmin(id, username, password, role) {
+
+    const newUsername = prompt("Username:", username);
+    if (newUsername === null || newUsername.trim() === "") {
+        alert("Username cannot be empty.");
+        return;
+    }
+
+    const newPassword = prompt("Password:", password);
+    if (newPassword === null || newPassword.trim() === "") {
+        alert("Password cannot be empty.");
+        return;
+    }
+
+    let newRole;
+
+    while (true) {
+
+        newRole = prompt("Role (admin/superadmin):", role);
+
+        if (newRole === null) return;
+
+        newRole = newRole.trim().toLowerCase();
+
+        if (newRole === "admin" || newRole === "superadmin") {
+            break;
+        }
+
+        alert("Role must be either 'admin' or 'superadmin'.");
+    }
+
+    const res = await fetch(`http://localhost:3000/api/admins/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: newUsername.trim(),
+            password: newPassword.trim(),
+            role: newRole
+        })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Admin updated");
+        loadDashboard();
+    } else {
+        alert(data.message || "Update failed");
+    }
+}
+
+
+// ================= FORM FUNCTIONS =================
+async function deleteForm(id){
+
+    if(!confirm("Delete this form submission?")) return;
+
+    const res = await fetch(`http://localhost:3000/api/users-data/${id}`, {
+        method: "DELETE"
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        alert("Deleted");
+        loadDashboard();
+    } else {
+        alert(data.message || "Delete failed");
+    }
+}
+
+
+// ================= FIXED EDIT FORM =================
+async function editForm(encodedForm){
+
+    const form = JSON.parse(decodeURIComponent(encodedForm));
+
+    const id = form.ID || form.id;
+
+    const Name = requiredPrompt("Name:", form.Name);
+    if (Name === null) return;
+
+    const Surname = requiredPrompt("Surname:", form.Surname);
+    if (Surname === null) return;
+
+    const Cell = requiredPrompt("Cell:", form.Cell);
+    if (Cell === null) return;
+
+    const Email = requiredPrompt("Email:", form.Email);
+    if (Email === null) return;
+
+    const Address = requiredPrompt("Address:", form.Address);
+    if (Address === null) return;
+
+    const Gender = requiredPrompt("Gender:", form.Gender);
+    if (Gender === null) return;
+
+    const Date = requiredPrompt("Date:", form.Date);
+    if (Date === null) return;
+
+    const Message = requiredPrompt("Message:", form.Message);
+    if (Message === null) return;
+
+    const res = await fetch(`http://localhost:3000/api/users-data/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Name,
+            Surname,
+            Cell,
+            Email,
+            Address,
+            Gender,
+            Date,
+            Message
+        })
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        alert("Updated");
+        loadDashboard();
+    } else {
+        alert(data.message || "Update failed");
+    }
+}
+
+
+// ================= ADD ADMIN =================
+async function addAdmin() {
+
+    const username = prompt("Enter username:");
+    if (username === null || username.trim() === "") {
+        alert("Username cannot be empty.");
+        return;
+    }
+
+    const password = prompt("Enter password:");
+    if (password === null || password.trim() === "") {
+        alert("Password cannot be empty.");
+        return;
+    }
+
+    let role;
+
+    while (true) {
+
+        role = prompt("Enter role (admin/superadmin):");
+
+        if (role === null) return;
+
+        role = role.trim().toLowerCase();
+
+        if (role === "admin" || role === "superadmin") {
+            break;
+        }
+
+        alert("Role must be either 'admin' or 'superadmin'.");
+    }
+
+    try {
+
+        const res = await fetch("http://localhost:3000/api/admins", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username.trim(),
+                password: password.trim(),
+                role: role
+            })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert("Admin added successfully");
+            loadDashboard();
+        } else {
+            alert(data.message || "Failed to add admin");
+        }
+
+    } catch (err) {
+        console.error("ADD ADMIN ERROR:", err);
+        alert("Server error while adding admin");
+    }
+}
+
+// ================= TOGGLE MESSAGE =================
+function toggleMessage(event, id) {
+    event.preventDefault();
+
+    const span = document.getElementById(`msg-${id}`);
+    const link = event.target;
+
+    const full = span.getAttribute("data-full");
+    const short = full.length > 10 ? full.substring(0, 10) + "..." : full;
+
+    if (link.textContent === "See More") {
+        span.textContent = full;
+        link.textContent = "See Less";
+    } else {
+        span.textContent = short;
+        link.textContent = "See More";
+    }
+}
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.remove("fade-out");
+});
+
+// Intercept link clicks
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+
+    // ignore external links / anchors
+    if (!href || href.startsWith("#") || href.startsWith("http")) return;
+
+    e.preventDefault();
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 100); // match CSS duration
+  });
+});
+</script>
+
+</body>
+</html>
