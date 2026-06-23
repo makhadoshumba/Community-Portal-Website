@@ -1,6 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 
 const app = express();
 
@@ -9,12 +10,13 @@ app.use(express.json());
 
 // SQL CONFIG
 const config = {
-    server: "DESKTOP-E4ICHTJ\\SQLEXPRESS01",
-    database: "Webdev",
-    driver: "msnodesqlv8",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_NAME,
     options: {
-        trustedConnection: true,
-        trustServerCertificate: true
+        encrypt: true,
+        trustServerCertificate: false
     }
 };
 
@@ -27,12 +29,15 @@ async function startServer() {
 
         console.log("✅ Connected to SQL Server");
 
-        app.listen(3000, () => {
-            console.log("🚀 Server running on http://localhost:3000");
+        const PORT = process.env.PORT || 3000;
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on port ${PORT}`);
         });
 
     } catch (err) {
         console.error("❌ SQL Connection Error:", err);
+        process.exit(1);
     }
 }
 
