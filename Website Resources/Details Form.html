@@ -348,6 +348,12 @@ body {
 </div>
 
 <script>
+
+// ================= API BASE URL =================
+const API_URL = "https://my-backend-api-zwfq.onrender.com";
+
+
+// ================= SUBMIT DATA =================
 async function submitData() {
 
     const name = document.getElementById("nameInput").value.trim();
@@ -357,7 +363,6 @@ async function submitData() {
     const address = document.getElementById("addressInput").value.trim();
     const date = document.getElementById("dateInput").value;
 
-    // FIX: avoid accidental empty-string confusion
     const messageRaw = document.getElementById("messageInput").value;
     const message = messageRaw.trim();
 
@@ -370,21 +375,21 @@ async function submitData() {
         return;
     }
 
-   const data = {
-    name,
-    surname,
-    cell,
-    email,
-    address,
-    gender,
-    date,
-    message
+    const data = {
+        name,
+        surname,
+        cell,
+        email,
+        address,
+        gender,
+        date,
+        message
     };
 
     console.log("Sending data:", data);
 
     try {
-        const response = await fetch("http://localhost:3000/api/users", {
+        const response = await fetch(`${API_URL}/api/users`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -403,7 +408,8 @@ async function submitData() {
     }
 }
 
-// CLEAR FORM (FIXED)
+
+// ================= CLEAR FORM =================
 function clearForm() {
     document.getElementById("nameInput").value = "";
     document.getElementById("surnameInput").value = "";
@@ -416,7 +422,8 @@ function clearForm() {
     document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 }
 
-// NOTIFICATION SYSTEM
+
+// ================= NOTIFICATION SYSTEM =================
 function showMessage(message, type) {
 
     let toast = document.getElementById("toast");
@@ -429,15 +436,12 @@ function showMessage(message, type) {
     }
 
     toast.textContent = message;
-
     toast.className = "toast " + type;
 
-    // trigger animation
     setTimeout(() => {
         toast.classList.add("show");
     }, 10);
 
-    // hide after 3 seconds
     setTimeout(() => {
         toast.classList.remove("show");
 
@@ -446,7 +450,9 @@ function showMessage(message, type) {
         }, 400);
     }, 3000);
 }
+
 </script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -456,9 +462,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // Intercept link clicks
 document.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", function (e) {
+
     const href = this.getAttribute("href");
 
-    // ignore external links / anchors
     if (!href || href.startsWith("#") || href.startsWith("http")) return;
 
     e.preventDefault();
@@ -467,7 +473,7 @@ document.querySelectorAll("a").forEach(link => {
 
     setTimeout(() => {
       window.location.href = href;
-    }, 100); // match CSS duration
+    }, 100);
   });
 });
 </script>

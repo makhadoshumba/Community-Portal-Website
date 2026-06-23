@@ -214,13 +214,20 @@ body {
 </div>
 
 <script>
+
+// ================= API BASE URL =================
+const API_URL = "https://my-backend-api-zwfq.onrender.com";
+
+
+// ================= SESSION CLEANUP =================
 window.addEventListener("pageshow", function () {
     if (!sessionStorage.getItem("activeSession")) {
         localStorage.removeItem("adminAuth");
     }
 });
 
-/* MESSAGE POPUP */
+
+// ================= MESSAGE POPUP =================
 function showMessage(text, color) {
     let box = document.getElementById("msgBox");
 
@@ -246,10 +253,13 @@ function showMessage(text, color) {
     setTimeout(() => box.remove(), 2500);
 }
 
-/* SHOW / HIDE PASSWORD */
+
+// ================= TOGGLE PASSWORD =================
 function togglePassword() {
     const password = document.getElementById("password");
     const eye = document.querySelector(".eye-btn");
+
+    if (!password || !eye) return;
 
     if (password.type === "password") {
         password.type = "text";
@@ -260,13 +270,15 @@ function togglePassword() {
     }
 }
 
-/* LOGIN FUNCTION (FIXED + WORKING ROLE FLOW) */
+
+// ================= LOGIN FUNCTION =================
 async function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+
+    const username = document.getElementById("username")?.value;
+    const password = document.getElementById("password")?.value;
 
     try {
-        const res = await fetch("http://localhost:3000/api/admin-login", {
+        const res = await fetch(`${API_URL}/api/admin-login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -288,7 +300,6 @@ async function login() {
 
             setTimeout(() => {
 
-                // ✅ FIX ADDED HERE (NORMALIZATION GUARANTEES CORRECT ROUTING)
                 const role = (data.role || "").trim().toLowerCase();
 
                 console.log("NORMALIZED ROLE:", role);
@@ -311,36 +322,43 @@ async function login() {
     }
 }
 
-// ================= ENTER KEY LOGIN FLOW =================
+
+// ================= ENTER KEY LOGIN =================
 document.addEventListener("DOMContentLoaded", () => {
 
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
 
-    // ENTER behavior on username field
+    if (!usernameInput || !passwordInput) return;
+
     usernameInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             event.preventDefault();
-            passwordInput.focus(); // move to password
+            passwordInput.focus();
         }
     });
 
-    // ENTER behavior on password field
     passwordInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             event.preventDefault();
-            login(); // trigger login
+            login();
         }
     });
 
 });
+
+
+// ================= FORGOT PASSWORD MODAL =================
 function forgotPassword() {
-    document.getElementById("forgotModal").style.display = "flex";
+    const modal = document.getElementById("forgotModal");
+    if (modal) modal.style.display = "flex";
 }
 
 function closeForgotModal() {
-    document.getElementById("forgotModal").style.display = "none";
+    const modal = document.getElementById("forgotModal");
+    if (modal) modal.style.display = "none";
 }
+
 </script>
 <!-- FOOTER -->
 <div class="footer">

@@ -408,6 +408,10 @@ body {
 
 <script>
 
+// ================= API BASE URL =================
+const API_URL = "https://my-backend-api-zwfq.onrender.com";
+
+
 // ================= INITIAL LOAD =================
 document.addEventListener("DOMContentLoaded", () => {
     loadDashboard();
@@ -416,133 +420,146 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ================= LIVE ADMIN SEARCH =================
 const adminSearchInput = document.getElementById("adminSearch");
-let adminSearchTimeout;
 
-adminSearchInput.addEventListener("input", () => {
+if (adminSearchInput) {
+    let adminSearchTimeout;
 
-    clearTimeout(adminSearchTimeout);
+    adminSearchInput.addEventListener("input", () => {
 
-    adminSearchTimeout = setTimeout(async () => {
+        clearTimeout(adminSearchTimeout);
 
-        const value = adminSearchInput.value.trim();
+        adminSearchTimeout = setTimeout(async () => {
 
-        const url = value
-            ? `http://localhost:3000/api/admins/search?q=${encodeURIComponent(value)}`
-            : `http://localhost:3000/api/admins`;
+            const value = adminSearchInput.value.trim();
 
-        const res = await fetch(url);
-        const admins = await res.json();
+            const url = value
+                ? `${API_URL}/api/admins/search?q=${encodeURIComponent(value)}`
+                : `${API_URL}/api/admins`;
 
-        const adminBody = document.querySelector("#adminTable tbody");
-        adminBody.innerHTML = "";
+            const res = await fetch(url);
+            const admins = await res.json();
 
-        admins.forEach(admin => {
+            const adminBody = document.querySelector("#adminTable tbody");
+            if (!adminBody) return;
 
-            const id = admin.ID || admin.id;
-            const username = admin.Username || admin.username || "-";
-            const password = admin.Password || admin.password || "-";
-            const role = (admin.Role || admin.role || "-").trim();
+            adminBody.innerHTML = "";
 
-            adminBody.innerHTML += `
-                <tr>
-                    <td>${id ?? "-"}</td>
-                    <td>${username}</td>
-                    <td>${password}</td>
-                    <td>${role}</td>
+            admins.forEach(admin => {
 
-                    <td class="actions">
-                        <button class="editBtn"
-                            onclick="editAdmin(${id}, '${username}', '${password}', '${role}')">
-                            Edit
-                        </button>
-                    </td>
+                const id = admin.ID || admin.id;
+                const username = admin.Username || admin.username || "-";
+                const password = admin.Password || admin.password || "-";
+                const role = (admin.Role || admin.role || "-").trim();
 
-                    <td class="actions">
-                        ${
-                            role.toLowerCase() === "superadmin"
-                                ? "🔒"
-                                : `<button class="deleteBtn" onclick="deleteAdmin(${id})">Delete</button>`
-                        }
-                    </td>
-                </tr>
-            `;
-        });
+                adminBody.innerHTML += `
+                    <tr>
+                        <td>${id ?? "-"}</td>
+                        <td>${username}</td>
+                        <td>${password}</td>
+                        <td>${role}</td>
 
-    }, 250);
-});
+                        <td class="actions">
+                            <button class="editBtn"
+                                onclick="editAdmin(${id},
+                                    ${JSON.stringify(username)},
+                                    ${JSON.stringify(password)},
+                                    ${JSON.stringify(role)})">
+                                Edit
+                            </button>
+                        </td>
+
+                        <td class="actions">
+                            ${
+                                role.toLowerCase() === "superadmin"
+                                    ? "🔒"
+                                    : `<button class="deleteBtn" onclick="deleteAdmin(${id})">Delete</button>`
+                            }
+                        </td>
+                    </tr>
+                `;
+            });
+
+        }, 250);
+    });
+}
 
 
 // ================= LIVE FORM SEARCH =================
 const formSearchInput = document.getElementById("formSearch");
-let formSearchTimeout;
 
-formSearchInput.addEventListener("input", () => {
+if (formSearchInput) {
+    let formSearchTimeout;
 
-    clearTimeout(formSearchTimeout);
+    formSearchInput.addEventListener("input", () => {
 
-    formSearchTimeout = setTimeout(async () => {
+        clearTimeout(formSearchTimeout);
 
-        const value = formSearchInput.value.trim();
+        formSearchTimeout = setTimeout(async () => {
 
-        const url = value
-            ? `http://localhost:3000/api/users-data/search?q=${encodeURIComponent(value)}`
-            : `http://localhost:3000/api/users-data`;
+            const value = formSearchInput.value.trim();
 
-        const res = await fetch(url);
-        const forms = await res.json();
+            const url = value
+                ? `${API_URL}/api/users-data/search?q=${encodeURIComponent(value)}`
+                : `${API_URL}/api/users-data`;
 
-        const formBody = document.querySelector("#formTable tbody");
-        formBody.innerHTML = "";
+            const res = await fetch(url);
+            const forms = await res.json();
 
-        forms.forEach(form => {
+            const formBody = document.querySelector("#formTable tbody");
+            if (!formBody) return;
 
-            const id = form.ID || form.id;
+            formBody.innerHTML = "";
 
-            const fullMessage = form.Message || "-";
-            const shortMessage = fullMessage.length > 10
-                ? fullMessage.substring(0, 10) + "..."
-                : fullMessage;
+            forms.forEach(form => {
 
-            formBody.innerHTML += `
-                <tr>
-                    <td>${id ?? "-"}</td>
-                    <td>${form.Name || "-"}</td>
-                    <td>${form.Surname || "-"}</td>
-                    <td>${form.Cell || "-"}</td>
-                    <td>${form.Email || "-"}</td>
-                    <td>${form.Address || "-"}</td>
-                    <td>${form.Gender || "-"}</td>
-                    <td>${form.Date || "-"}</td>
+                const id = form.ID || form.id;
 
-                    <td>
-                        <span id="msg-${id}" data-full="${fullMessage}">
-                            ${shortMessage}
-                        </span>
+                const fullMessage = form.Message || "-";
+                const shortMessage = fullMessage.length > 10
+                    ? fullMessage.substring(0, 10) + "..."
+                    : fullMessage;
 
-                        ${fullMessage.length > 10
-                            ? `<a href="#" onclick="toggleMessage(event, ${id})">See More</a>`
-                            : ""
-                        }
-                    </td>
+                formBody.innerHTML += `
+                    <tr>
+                        <td>${id ?? "-"}</td>
+                        <td>${form.Name || "-"}</td>
+                        <td>${form.Surname || "-"}</td>
+                        <td>${form.Cell || "-"}</td>
+                        <td>${form.Email || "-"}</td>
+                        <td>${form.Address || "-"}</td>
+                        <td>${form.Gender || "-"}</td>
+                        <td>${form.Date || "-"}</td>
 
-                    <td class="actions">
-                        <button class="editBtn"
-                            onclick="editForm('${encodeURIComponent(JSON.stringify(form))}')">
-                            Edit
-                        </button>
-                    </td>
+                        <td>
+                            <span id="msg-${id}" data-full="${fullMessage}">
+                                ${shortMessage}
+                            </span>
 
-                    <td class="actions">
-                        <button class="deleteBtn" onclick="deleteForm(${id})">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
+                            ${fullMessage.length > 10
+                                ? `<a href="#" onclick="toggleMessage(event, ${id})">See More</a>`
+                                : ""
+                            }
+                        </td>
 
-    }, 250);
-});
+                        <td class="actions">
+                            <button class="editBtn"
+                                onclick="editForm('${encodeURIComponent(JSON.stringify(form))}')">
+                                Edit
+                            </button>
+                        </td>
+
+                        <td class="actions">
+                            <button class="deleteBtn" onclick="deleteForm(${id})">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+        }, 250);
+    });
+}
 
 
 // ================= DASHBOARD LOAD =================
@@ -550,7 +567,7 @@ async function loadDashboard() {
 
     try {
 
-        const adminResponse = await fetch("http://localhost:3000/api/admins");
+        const adminResponse = await fetch(`${API_URL}/api/admins`);
         const admins = await adminResponse.json();
 
         document.getElementById("totalAdmins").textContent = admins.length;
@@ -574,7 +591,10 @@ async function loadDashboard() {
 
                     <td class="actions">
                         <button class="editBtn"
-                            onclick="editAdmin(${id}, '${username}', '${password}', '${role}')">
+                            onclick="editAdmin(${id},
+                                ${JSON.stringify(username)},
+                                ${JSON.stringify(password)},
+                                ${JSON.stringify(role)})">
                             Edit
                         </button>
                     </td>
@@ -591,7 +611,7 @@ async function loadDashboard() {
         });
 
 
-        const formResponse = await fetch("http://localhost:3000/api/users-data");
+        const formResponse = await fetch(`${API_URL}/api/users-data`);
         const forms = await formResponse.json();
 
         document.getElementById("totalForms").textContent = forms.length;
@@ -651,6 +671,7 @@ async function loadDashboard() {
     }
 }
 
+
 // ================= REQUIRED PROMPT =================
 function requiredPrompt(label, currentValue) {
 
@@ -658,10 +679,8 @@ function requiredPrompt(label, currentValue) {
 
         const value = prompt(label, currentValue);
 
-        // User pressed Cancel
         if (value === null) return null;
 
-        // Empty field
         if (value.trim() === "") {
             alert(label + " cannot be empty.");
             continue;
@@ -669,7 +688,6 @@ function requiredPrompt(label, currentValue) {
 
         return value.trim();
     }
-
 }
 
 
@@ -678,7 +696,7 @@ async function deleteAdmin(id){
 
     if(!confirm("Delete this admin?")) return;
 
-    const res = await fetch(`http://localhost:3000/api/admins/${id}`, {
+    const res = await fetch(`${API_URL}/api/admins/${id}`, {
         method: "DELETE"
     });
 
@@ -692,42 +710,32 @@ async function deleteAdmin(id){
     }
 }
 
+
 async function editAdmin(id, username, password, role) {
 
     const newUsername = prompt("Username:", username);
-    if (newUsername === null || newUsername.trim() === "") {
-        alert("Username cannot be empty.");
-        return;
-    }
+    if (!newUsername || newUsername.trim() === "") return alert("Username cannot be empty.");
 
     const newPassword = prompt("Password:", password);
-    if (newPassword === null || newPassword.trim() === "") {
-        alert("Password cannot be empty.");
-        return;
-    }
+    if (!newPassword || newPassword.trim() === "") return alert("Password cannot be empty.");
 
     let newRole;
 
     while (true) {
 
         newRole = prompt("Role (admin/superadmin):", role);
-
         if (newRole === null) return;
 
         newRole = newRole.trim().toLowerCase();
 
-        if (newRole === "admin" || newRole === "superadmin") {
-            break;
-        }
+        if (newRole === "admin" || newRole === "superadmin") break;
 
         alert("Role must be either 'admin' or 'superadmin'.");
     }
 
-    const res = await fetch(`http://localhost:3000/api/admins/${id}`, {
+    const res = await fetch(`${API_URL}/api/admins/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             username: newUsername.trim(),
             password: newPassword.trim(),
@@ -751,7 +759,7 @@ async function deleteForm(id){
 
     if(!confirm("Delete this form submission?")) return;
 
-    const res = await fetch(`http://localhost:3000/api/users-data/${id}`, {
+    const res = await fetch(`${API_URL}/api/users-data/${id}`, {
         method: "DELETE"
     });
 
@@ -766,52 +774,24 @@ async function deleteForm(id){
 }
 
 
-// ================= FIXED EDIT FORM =================
 async function editForm(encodedForm){
 
     const form = JSON.parse(decodeURIComponent(encodedForm));
-
     const id = form.ID || form.id;
 
-    const Name = requiredPrompt("Name:", form.Name);
-    if (Name === null) return;
+    const Name = requiredPrompt("Name:", form.Name); if (!Name) return;
+    const Surname = requiredPrompt("Surname:", form.Surname); if (!Surname) return;
+    const Cell = requiredPrompt("Cell:", form.Cell); if (!Cell) return;
+    const Email = requiredPrompt("Email:", form.Email); if (!Email) return;
+    const Address = requiredPrompt("Address:", form.Address); if (!Address) return;
+    const Gender = requiredPrompt("Gender:", form.Gender); if (!Gender) return;
+    const Date = requiredPrompt("Date:", form.Date); if (!Date) return;
+    const Message = requiredPrompt("Message:", form.Message); if (!Message) return;
 
-    const Surname = requiredPrompt("Surname:", form.Surname);
-    if (Surname === null) return;
-
-    const Cell = requiredPrompt("Cell:", form.Cell);
-    if (Cell === null) return;
-
-    const Email = requiredPrompt("Email:", form.Email);
-    if (Email === null) return;
-
-    const Address = requiredPrompt("Address:", form.Address);
-    if (Address === null) return;
-
-    const Gender = requiredPrompt("Gender:", form.Gender);
-    if (Gender === null) return;
-
-    const Date = requiredPrompt("Date:", form.Date);
-    if (Date === null) return;
-
-    const Message = requiredPrompt("Message:", form.Message);
-    if (Message === null) return;
-
-    const res = await fetch(`http://localhost:3000/api/users-data/${id}`, {
+    const res = await fetch(`${API_URL}/api/users-data/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            Name,
-            Surname,
-            Cell,
-            Email,
-            Address,
-            Gender,
-            Date,
-            Message
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Name, Surname, Cell, Email, Address, Gender, Date, Message })
     });
 
     const data = await res.json();
@@ -829,62 +809,40 @@ async function editForm(encodedForm){
 async function addAdmin() {
 
     const username = prompt("Enter username:");
-    if (username === null || username.trim() === "") {
-        alert("Username cannot be empty.");
-        return;
-    }
+    if (!username || username.trim() === "") return alert("Username cannot be empty.");
 
     const password = prompt("Enter password:");
-    if (password === null || password.trim() === "") {
-        alert("Password cannot be empty.");
-        return;
-    }
+    if (!password || password.trim() === "") return alert("Password cannot be empty.");
 
     let role;
 
     while (true) {
-
         role = prompt("Enter role (admin/superadmin):");
-
         if (role === null) return;
 
         role = role.trim().toLowerCase();
 
-        if (role === "admin" || role === "superadmin") {
-            break;
-        }
+        if (role === "admin" || role === "superadmin") break;
 
         alert("Role must be either 'admin' or 'superadmin'.");
     }
 
-    try {
+    const res = await fetch(`${API_URL}/api/admins`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, role })
+    });
 
-        const res = await fetch("http://localhost:3000/api/admins", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: username.trim(),
-                password: password.trim(),
-                role: role
-            })
-        });
+    const data = await res.json();
 
-        const data = await res.json();
-
-        if (data.success) {
-            alert("Admin added successfully");
-            loadDashboard();
-        } else {
-            alert(data.message || "Failed to add admin");
-        }
-
-    } catch (err) {
-        console.error("ADD ADMIN ERROR:", err);
-        alert("Server error while adding admin");
+    if (data.success) {
+        alert("Admin added successfully");
+        loadDashboard();
+    } else {
+        alert(data.message || "Failed to add admin");
     }
 }
+
 
 // ================= TOGGLE MESSAGE =================
 function toggleMessage(event, id) {

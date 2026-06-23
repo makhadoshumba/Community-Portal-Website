@@ -254,6 +254,8 @@ body {
 
 <script>
 
+const API_URL = "https://my-backend-api-zwfq.onrender.com";
+
 function openModal(msg) {
     document.getElementById("modalText").innerText = msg;
     document.getElementById("messageModal").style.display = "flex";
@@ -264,10 +266,12 @@ function closeModal() {
 }
 
 async function loadData() {
-    const res = await fetch("http://localhost:3000/api/users-data");
+    const res = await fetch(`${API_URL}/api/users-data`);
     const data = await res.json();
 
     const body = document.getElementById("body");
+
+    body.innerHTML = ""; // IMPORTANT FIX: prevent duplicates on reload
 
     data.forEach(item => {
 
@@ -297,13 +301,10 @@ async function loadData() {
 
 function logout() {
 
-    // 🔥 THIS IS THE IMPORTANT FIX
     sessionStorage.removeItem("activeSession");
     sessionStorage.removeItem("adminRole");
-
     localStorage.removeItem("adminAuth");
 
-    // prevents back-button restore reuse
     window.location.replace("Admin.html");
 }
 
@@ -318,7 +319,6 @@ function logout() {
 
     checkAuth();
 
-    // 🔥 prevents back button cache bypass
     window.addEventListener("pageshow", function (event) {
         if (event.persisted) {
             checkAuth();
