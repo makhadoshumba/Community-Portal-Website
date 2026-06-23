@@ -348,7 +348,6 @@ body {
 </div>
 
 <script>
-
 const API_URL = "https://my-backend-api-zwfq.onrender.com";
 
 async function submitData() {
@@ -360,21 +359,34 @@ async function submitData() {
     const address = document.getElementById("addressInput").value.trim();
     const date = document.getElementById("dateInput").value;
 
+    // FIX: avoid accidental empty-string confusion
     const messageRaw = document.getElementById("messageInput").value;
     const message = messageRaw.trim();
 
     const genderElement = document.querySelector('input[name="gender"]:checked');
     const gender = genderElement ? genderElement.value : "";
 
+    // validation
     if (!name || !surname || !cell || !email || !address || !gender || !date || !message) {
         showMessage("Please fill in all fields", "error");
         return;
     }
 
-    const data = { name, surname, cell, email, address, gender, date, message };
+    const data = {
+        name,
+        surname,
+        cell,
+        email,
+        address,
+        gender,
+        date,
+        message
+    };
+
+    console.log("Sending data:", data);
 
     try {
-        const response = await fetch(`${API_URL}/api/users`, {
+        const response = await fetch("${API_URL}/api/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -393,8 +405,9 @@ async function submitData() {
     }
 }
 
-// CLEAR FORM
+// CLEAR FORM (FIXED)
 function clearForm() {
+
     document.getElementById("nameInput").value = "";
     document.getElementById("surnameInput").value = "";
     document.getElementById("cellInput").value = "";
@@ -421,10 +434,12 @@ function showMessage(message, type) {
     toast.textContent = message;
     toast.className = "toast " + type;
 
+    // trigger animation
     setTimeout(() => {
         toast.classList.add("show");
     }, 10);
 
+    // hide after 3 seconds
     setTimeout(() => {
         toast.classList.remove("show");
 
