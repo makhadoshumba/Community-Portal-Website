@@ -349,11 +349,8 @@ body {
 
 <script>
 
-// ================= API BASE URL =================
 const API_URL = "https://my-backend-api-zwfq.onrender.com";
 
-
-// ================= SUBMIT DATA =================
 async function submitData() {
 
     const name = document.getElementById("nameInput").value.trim();
@@ -369,24 +366,12 @@ async function submitData() {
     const genderElement = document.querySelector('input[name="gender"]:checked');
     const gender = genderElement ? genderElement.value : "";
 
-    // validation
     if (!name || !surname || !cell || !email || !address || !gender || !date || !message) {
         showMessage("Please fill in all fields", "error");
         return;
     }
 
-    const data = {
-        name,
-        surname,
-        cell,
-        email,
-        address,
-        gender,
-        date,
-        message
-    };
-
-    console.log("Sending data:", data);
+    const data = { name, surname, cell, email, address, gender, date, message };
 
     try {
         const response = await fetch(`${API_URL}/api/users`, {
@@ -408,8 +393,7 @@ async function submitData() {
     }
 }
 
-
-// ================= CLEAR FORM =================
+// CLEAR FORM
 function clearForm() {
     document.getElementById("nameInput").value = "";
     document.getElementById("surnameInput").value = "";
@@ -422,8 +406,7 @@ function clearForm() {
     document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 }
 
-
-// ================= NOTIFICATION SYSTEM =================
+// NOTIFICATION SYSTEM
 function showMessage(message, type) {
 
     let toast = document.getElementById("toast");
@@ -450,7 +433,6 @@ function showMessage(message, type) {
         }, 400);
     }, 3000);
 }
-
 </script>
 
 
