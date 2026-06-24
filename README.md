@@ -24,8 +24,8 @@ The intent behind the creation of the panels was to allow administrators to easi
 <br>
 <p><b>Project Architectural diagram:</b><p>
 
-<img style="'height: 200px;' 'width: 200px;'" src="frontend/Architectural diagram.jpg">
-
+<img src="frontend/Architectural diagram.jpg" width="600" height="500">
+<br>
 <h3>Project Structure:</h3>
 <pre>
 Community Portal Website
@@ -63,12 +63,13 @@ Community Portal Website
         ├── Users Table
         └── Admins Table
 </pre>
-
+<br>
 <h3>Contact form architecture:</h3>
-<img src="frontend/Contact form.jpg">
-
+<img src="frontend/Contact form.jpg" width="600" height="500">
+<br>
 <h3>Admin System Architecture (Admin Login):</h3>
-<img src="frontend/Admin Page.jpg">
-
-<h3>Admin System Architecture (Admin Panel/Super Admin Panel)</h3>
-<img src="frontend/Super,admin panel.jpg">
+<img src="frontend/Admin Page.jpg" width="600" height="500">
+<br>
+<h3>Admin System Architecture (Admin Panel/Super Admin Panel):</h3>
+<img src="frontend/Super,admin panel.jpg" width="600" height="500">
+<br>
