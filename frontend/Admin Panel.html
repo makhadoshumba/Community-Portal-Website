@@ -3,6 +3,7 @@
 <head>
     <title>Community Portal | Admin Panel</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             margin: 0;
@@ -129,7 +130,89 @@ body {
     transform: translateX(-100%);
   }
 }
-    </style>
+
+/* ================= RESPONSIVE OPTIMIZATION ================= */
+
+/* Global safety */
+* {
+    box-sizing: border-box;
+}
+
+/* Prevent horizontal scrolling issues */
+body {
+    overflow-x: hidden;
+}
+
+/* Make navbar wrap on small screens */
+.navbar {
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Tablet adjustments */
+@media (max-width: 900px) {
+    table {
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    h2 {
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+
+    .navbar {
+        gap: 10px;
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    h2 {
+        font-size: 20px;
+        padding: 8px 16px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+
+    h2 {
+        font-size: 18px;
+    }
+
+    th, td {
+        font-size: 11px;
+    }
+}
+
+</style>
 
 <script>
 (function () {
@@ -168,6 +251,8 @@ body {
     });
 
 })();
+
+
 </script>
 
 </head>

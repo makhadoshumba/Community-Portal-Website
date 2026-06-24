@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Community Portal | Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -382,6 +383,104 @@ body {
   to {
     transform: translateX(-100%);
   }
+}
+
+/* =========================
+   GLOBAL RESPONSIVE FIX
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+/* prevent images breaking layout */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* =========================
+   TABLET FIX
+========================= */
+@media (max-width: 900px) {
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+}
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 600px) {
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .hero {
+        padding: 50px 15px 30px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 90%;
+        max-width: 280px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .card img {
+        height: 180px;
+    }
+
+    .panel {
+        padding: 12px;
+    }
+
+    .side-card {
+        padding: 12px;
+    }
+}
+
+/* =========================
+   SMALL PHONES FIX
+========================= */
+@media (max-width: 400px) {
+
+    .hero h1 {
+        font-size: 22px;
+    }
+
+    .navbar a {
+        font-size: 13px;
+    }
 }
 
     </style>

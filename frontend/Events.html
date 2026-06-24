@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Community Portal | Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -336,6 +337,78 @@ body {
   to {
     transform: translateX(-100%);
   }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* =========================
+   GRID RESPONSIVENESS FIX
+========================= */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #search {
+        width: 90% !important;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+}
+
+/* =========================
+   CARD SAFETY FIX (IMPORTANT)
+========================= */
+.card {
+    width: 100%;
+}
+
+/* prevent image distortion */
+.card img {
+    width: 100%;
+    display: block;
+}
+
+/* =========================
+   BUTTON TOUCH OPTIMIZATION
+========================= */
+.transparent-btn {
+    cursor: pointer;
+    width: 100%;
+}
+
+/* =========================
+   NAVBAR WRAP FIX
+========================= */
+@media (max-width: 600px) {
+    .navbar {
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 14px;
+    }
 }
 
 </style>

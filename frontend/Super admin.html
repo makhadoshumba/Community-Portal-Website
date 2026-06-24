@@ -3,6 +3,7 @@
 <head>
     <title> Community Portal | Super Admin</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
     body {
@@ -230,6 +231,106 @@ body {
     transform: translateX(-100%);
   }
 }
+
+/* ================= RESPONSIVE UPGRADE ================= */
+
+/* Large tablets + small laptops */
+@media (max-width: 1024px) {
+    .card {
+        width: 98%;
+    }
+
+    .stat-card {
+        width: 45%;
+    }
+
+    .navbar {
+        gap: 12px;
+        font-size: 14px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 8px;
+    }
+
+    .stat-card {
+        width: 48%;
+    }
+
+    .searchBox {
+        font-size: 13px;
+    }
+
+    th, td {
+        font-size: 11px;
+        padding: 6px;
+    }
+
+    .editBtn,
+    .deleteBtn {
+        font-size: 10px;
+        padding: 5px 6px;
+    }
+}
+
+/* Large phones */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .stat-card {
+        width: 100%;
+    }
+
+    .stats {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 10px;
+    }
+
+    .actions {
+        width: auto;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .searchBox {
+        font-size: 12px;
+    }
+
+    .editBtn,
+    .deleteBtn {
+        font-size: 9px;
+        padding: 4px 5px;
+    }
+
+    td, th {
+        font-size: 9px;
+    }
+}
+
 </style>
 
 <script>
