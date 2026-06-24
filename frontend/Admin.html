@@ -389,11 +389,25 @@ details:hover summary i {
     margin-bottom: 15px;
 }
 
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
+
+.dots::after {
+    content: "";
+    animation: dots 1.2s infinite;
+}
+
+@keyframes dots {
+    0% { content: ""; }
+    33% { content: "."; }
+    66% { content: ".."; }
+    100% { content: "..."; }
+}
+
 </style>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
@@ -724,7 +738,8 @@ document.querySelectorAll("a").forEach(link => {
 
 <div id="loadingOverlay" class="loading-overlay">
     <div class="spinner"></div>
-    <p>Logging in...</p>
+    <p>Connecting to server<span class="dots">...</span></p>
+    <small>Please wait, this may take a few seconds.</small>
 </div>
 
 </body>
