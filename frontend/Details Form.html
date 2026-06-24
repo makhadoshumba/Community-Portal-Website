@@ -190,13 +190,18 @@ details:hover summary i {
     color: white;
     font-family: system-ui;
     font-size: 14px;
-    z-index: 99999;
+    z-index: 2147483647;
     min-width: 220px;
 
     transform: translateX(120%);
     opacity: 0;
     transition: all 0.4s ease;
     box-shadow: 0 0 15px rgba(0,0,0,0.4);
+
+    pointer-events: none;
+
+    will-change: transform, opacity; /* ✅ FIX added */
+    backface-visibility: hidden;     /* ✅ FIX added */
 }
 
 .toast.show {
@@ -451,14 +456,21 @@ function showMessage(message, type) {
     toast.textContent = message;
     toast.className = "toast " + type;
 
-    // FORCE reflow (fixes animation glitches)
-    void toast.offsetWidth;
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.add("show");
+    }, 10);
 
-    // DO NOT remove immediately (this was breaking it)
     setTimeout(() => {
         toast.classList.remove("show");
+
+        setTimeout(() => {
+            toast.remove();
+        }, 400);
     }, 3000);
 }
 </script>
@@ -487,6 +499,7 @@ document.querySelectorAll("a").forEach(link => {
   });
 });
 </script>
+
 
 </body>
 </html>
