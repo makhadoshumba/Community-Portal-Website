@@ -23,3 +23,50 @@ Here, I have created a full stack web app. This website is essentially a communi
 <p><b>Project Architectural diagram:</b><p>
 
 <img style="'height: 200px;' 'width: 200px;'" src="frontend/Architectural diagram.jpg">
+
+<h3>Project Structure:</h3>
+<pre>
+Community Portal Website
+│
+├── Frontend
+│   ├── Home
+│   ├── About Us
+│   ├── Achievements
+│   ├── Events
+│   ├── Contact Form
+│   └── Admin Login
+│
+├── Admin System
+│   ├── Admin Dashboard
+│   │   ├── View Forms
+│   │   ├── Edit Forms
+│   │   ├── Delete Forms
+│   │   └── Search Forms
+│   │
+│   └── Super Admin Dashboard
+│       ├── Manage Admins
+│       ├── Add Admin
+│       ├── Edit Admin
+│       ├── Delete Admin
+│       └── Search Admins
+│
+├── Backend
+│   ├── Node.js
+│   ├── Express.js
+│   ├── REST API
+│   └── Authentication
+│
+└── Database
+    └── Azure SQL Database
+        ├── Users Table
+        └── Admins Table
+</pre>
+
+<h3>Contact form architecture:</h3>
+<img src="frontend/Contact form.jpg">
+
+<h3>Admin System Architecture (Admin Login):</h3>
+<img src="frontend/Admin Page.jpg">
+
+<h3>Admin System Architecture (Admin Panel/Super Admin Panel)</h3>
+<img src="frontend/Super,admin panel.jpg"
