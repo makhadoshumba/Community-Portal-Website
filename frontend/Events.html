@@ -351,6 +351,21 @@ body {
    MOBILE RESPONSIVENESS ONLY
    ========================= */
 
+  * {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Navbar responsiveness (no design change, just wrapping) */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    } 
+
 /* Tablets */
 @media (max-width: 900px) {
 
@@ -371,9 +386,9 @@ body {
 @media (max-width: 600px) {
 
     .navbar {
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 12px;
+        justify-content: center;
+        gap: 10px;
+        font-size: 13px;
     }
 
     .hero h1 {

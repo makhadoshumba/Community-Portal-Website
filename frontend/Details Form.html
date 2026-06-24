@@ -242,6 +242,22 @@ details:hover summary i {
 /* =========================
    ✅ MOBILE RESPONSIVENESS ONLY
    ========================= */
+
+   * {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Navbar responsiveness (no design change, just wrapping) */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    } 
+   
 @media (max-width: 1024px) {
     .layout {
         flex-direction: column;
@@ -283,9 +299,9 @@ details:hover summary i {
     }
 
     .navbar {
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 12px;
+        justify-content: center;
+        gap: 10px;
+        font-size: 13px;
     }
 }
 
