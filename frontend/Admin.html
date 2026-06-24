@@ -471,6 +471,11 @@ function showMessage(text, color) {
         document.body.appendChild(box);
     }
 
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
     box.textContent = text;
 
     box.style.position = "fixed";
