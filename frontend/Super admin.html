@@ -514,13 +514,14 @@ if (adminSearchInput) {
                         <td>${role}</td>
 
                         <td class="actions">
-                            <button class="editBtn"
-                                onclick="editAdmin(${id},
-                                    ${JSON.stringify(username)},
-                                    ${JSON.stringify(password)},
-                                    ${JSON.stringify(role)})">
-                                Edit
-                            </button>
+                        <button class="editBtn"
+                           data-id="${id}"
+                           data-username="${encodeURIComponent(username)}"
+                           data-password="${encodeURIComponent(password)}"
+                           data-role="${encodeURIComponent(role)}"
+                           onclick="handleEditAdmin(this)">
+                           Edit
+                        </button>
                         </td>
 
                         <td class="actions">
@@ -645,13 +646,16 @@ async function loadDashboard() {
                     <td>${role}</td>
 
                     <td class="actions">
+                        <td class="actions">
                         <button class="editBtn"
-                            onclick="editAdmin(${id},
-                                ${JSON.stringify(username)},
-                                ${JSON.stringify(password)},
-                                ${JSON.stringify(role)})">
-                            Edit
+                           data-id="${id}"
+                           data-username="${encodeURIComponent(username)}"
+                           data-password="${encodeURIComponent(password)}"
+                           data-role="${encodeURIComponent(role)}"
+                           onclick="handleEditAdmin(this)">
+                           Edit
                         </button>
+                        </td>
                     </td>
 
                     <td class="actions">
@@ -747,6 +751,7 @@ function requiredPrompt(label, currentValue) {
 
 
 // ================= ADMIN FUNCTIONS =================
+
 async function deleteAdmin(id){
 
     if(!confirm("Delete this admin?")) return;
@@ -806,6 +811,16 @@ async function editAdmin(id, username, password, role) {
     } else {
         alert(data.message || "Update failed");
     }
+}
+
+function handleEditAdmin(btn) {
+
+    const id = btn.dataset.id;
+    const username = decodeURIComponent(btn.dataset.username);
+    const password = decodeURIComponent(btn.dataset.password);
+    const role = decodeURIComponent(btn.dataset.role);
+
+    editAdmin(id, username, password, role);
 }
 
 
