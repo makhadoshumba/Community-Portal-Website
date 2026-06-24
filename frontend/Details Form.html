@@ -451,16 +451,14 @@ function showMessage(message, type) {
     toast.textContent = message;
     toast.className = "toast " + type;
 
-    setTimeout(() => {
-        toast.classList.add("show");
-    }, 10);
+    // FORCE reflow (fixes animation glitches)
+    void toast.offsetWidth;
 
+    toast.classList.add("show");
+
+    // DO NOT remove immediately (this was breaking it)
     setTimeout(() => {
         toast.classList.remove("show");
-
-        setTimeout(() => {
-            toast.remove();
-        }, 400);
     }, 3000);
 }
 </script>
