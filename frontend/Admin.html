@@ -356,16 +356,17 @@ details:hover summary i {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
+
+    width: 100vw;
+    height: 100vh;
 
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(6px);
 
     display: none;
 
-    /* 🔥 hard-center fix */
-    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -373,6 +374,8 @@ details:hover summary i {
     z-index: 999999;
     color: #ccc;
     font-family: system-ui;
+
+    text-align: center;
 }
 
 .loading-overlay.show {
@@ -388,7 +391,6 @@ details:hover summary i {
     animation: spin 1s linear infinite;
     margin-bottom: 15px;
 }
-
 
 @keyframes spin {
     to {
