@@ -14,10 +14,12 @@ const config = {
     password: process.env.DB_PASSWORD,
     server: process.env.DB_SERVER,
     database: process.env.DB_NAME,
-    options: {
-        encrypt: true,
-        trustServerCertificate: false
-    }
+options: {
+    encrypt: true,
+    trustServerCertificate: true,
+    connectTimeout: 30000,
+    requestTimeout: 30000
+}
 };
 
 let pool;
