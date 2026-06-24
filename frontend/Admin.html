@@ -4,7 +4,7 @@
     <title>Admin | Community Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<style>
         body {
             margin: 0;
             font-family: system-ui;
@@ -172,13 +172,42 @@ body {
   }
 }
 
-    </style>
+/* =========================
+           MOBILE RESPONSIVENESS ONLY
+           ========================= */
+        @media (max-width: 600px) {
+
+            .navbar {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .glow-box {
+                width: 90%;
+                padding: 18px;
+                margin: 20px auto;
+            }
+
+            .input-wrap {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .container {
+                padding: 20px;
+                align-items: flex-start;
+            }
+        }
+
+
+</style>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 
-<body class="fade-out">
-
-<!-- NAVBAR -->
 <div class="navbar">
     <a href="index.html">Home</a>
     <a href="About us.html">About</a>
@@ -187,6 +216,8 @@ body {
     <a href="Details Form.html">Contact</a>
     <a href="Admin.html">Admin</a>
 </div>
+
+<body class="fade-out">
 
 <!-- MAIN -->
 <div class="container">

@@ -323,6 +323,54 @@ body {
   }
 }
 
+/* =========================
+   MOBILE RESPONSIVENESS (ADDED ONLY)
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .achievement,
+    .achievements {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .achievement img,
+    .achievements img {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+    }
+
+    .achievement-text,
+    .achievements-text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+        gap: 12px;
+        padding: 12px;
+  
+    }
+
+    .container h1 {
+        font-size: 28px;
+    }
+
+    .container p {
+        font-size: 14px;
+    }
+
+    .achievement img,
+    .achievements img {
+        max-height: 350px;
+    }
+
+}
+
     </style>
 </head>
 

@@ -38,6 +38,7 @@
         .navbar a {
             color: #ccc;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .navbar a:hover {
@@ -385,9 +386,9 @@ body {
   }
 }
 
-/* ================= GLOBAL RESPONSIVE FIX (INTEGRATED) ================= */
+/* ================= GLOBAL RESPONSIVE FIX ================= */
 
-/* Prevent overflow issues across all pages */
+/* Prevent horizontal overflow issues */
 * {
     box-sizing: border-box;
 }
@@ -396,14 +397,14 @@ body {
     overflow-x: hidden;
 }
 
-/* Navbar: keep your design but make it naturally wrap */
-.navbar {
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 14px 10px;
-}
+/* Navbar responsiveness (no design change, just wrapping) */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    }
 
-/* Hero responsiveness */
+/* Smooth responsive text scaling */
 .hero h1 {
     font-size: clamp(26px, 5vw, 42px);
 }
@@ -412,20 +413,19 @@ body {
     font-size: clamp(14px, 2.5vw, 16px);
 }
 
-/* Buttons scale naturally */
+/* Buttons scale instead of breaking */
 .btn {
     font-size: clamp(13px, 2.2vw, 16px);
-    padding: 10px 18px;
 }
 
-/* BREAKING banner */
+/* Breaking banner stays contained */
 .breaking {
     width: min(95%, 900px);
-    font-size: clamp(12px, 2.2vw, 14px);
 }
 
-/* GRID: already good — just tighten mobile spacing */
+/* Tablet */
 @media (max-width: 900px) {
+
     .grid {
         gap: 20px;
         width: 95%;
@@ -434,6 +434,7 @@ body {
     .dashboard {
         width: 95%;
         gap: 15px;
+        grid-template-columns: 1fr;
     }
 
     .card img {
@@ -445,7 +446,7 @@ body {
     }
 }
 
-/* MOBILE (real fix layer) */
+/* Mobile */
 @media (max-width: 600px) {
 
     .hero {
@@ -463,10 +464,6 @@ body {
         gap: 18px;
     }
 
-    .dashboard {
-        grid-template-columns: 1fr;
-    }
-
     .card img {
         height: 180px;
     }
@@ -475,21 +472,17 @@ body {
         height: 150px;
     }
 
-    .side-card {
-        padding: 12px;
-    }
-
-    .contact-cards {
-        gap: 12px;
-    }
-
     .cards {
         width: 100%;
         max-width: 320px;
     }
+
+    .side-card {
+        padding: 12px;
+    }
 }
 
-/* SMALL PHONES */
+/* Small phones */
 @media (max-width: 400px) {
 
     .hero h1 {
@@ -502,7 +495,9 @@ body {
     }
 
     .navbar {
-        font-size: 12px;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
     }
 }
     </style>

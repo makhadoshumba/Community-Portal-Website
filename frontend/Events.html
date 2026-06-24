@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <style>
+<style>
         body {
             margin: 0;
             font-family: system-ui;
@@ -346,6 +346,58 @@ body {
 body {
     overflow-x: hidden;
 }
+
+/* =========================
+   MOBILE RESPONSIVENESS ONLY
+   ========================= */
+
+/* Tablets */
+@media (max-width: 900px) {
+
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #search {
+        width: 80%;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    #search {
+        width: 95%;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card img {
+        height: 200px;
+    }
+
+    .transparent-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+</style>
 
 
 </style>

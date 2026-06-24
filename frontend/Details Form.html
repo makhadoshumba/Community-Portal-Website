@@ -40,21 +40,13 @@ body {
 }
 
 @keyframes slideIn {
-    from {
-        transform: translateX(100%);
-    }
-    to {
-        transform: translateX(0);
-    }
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
 }
 
 @keyframes slideOut {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%);
-    }
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
 }
 
 /* NAVBAR */
@@ -68,6 +60,7 @@ body {
     position: sticky;
     top: 0;
     backdrop-filter: blur(10px);
+    flex-wrap: wrap; /* ✅ MOBILE FIX */
 }
 
 .navbar a {
@@ -87,7 +80,6 @@ body {
     padding: 10px;
     border-radius: 8px;
     width: 500px;
-
     margin: 50px 25px 50px auto;
 
     box-shadow:
@@ -246,6 +238,57 @@ details:hover summary i {
     color: #0EA5E9;
     text-decoration: none;
 }
+
+/* =========================
+   ✅ MOBILE RESPONSIVENESS ONLY
+   ========================= */
+@media (max-width: 1024px) {
+    .layout {
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+    }
+
+    .glow-box {
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .map-container {
+        width: 90%;
+        height: 450px;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-hero h1 {
+        font-size: 28px;
+    }
+
+    .contact-hero p {
+        font-size: 14px;
+    }
+
+    .glow-box {
+        width: 95%;
+    }
+
+    .map-container {
+        height: 350px;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    }
+}
+
 </style>
 
 <div class="navbar">

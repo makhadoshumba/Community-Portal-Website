@@ -343,6 +343,82 @@ body {
     transform: translateX(-100%);
   }
 }
+
+/* =========================
+   MOBILE RESPONSIVENESS ONLY
+   (NO LAYOUT CHANGES ABOVE)
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        padding: 0 10px;
+    }
+
+    .strip {
+        grid-template-columns: 1fr;
+    }
+
+    .article {
+        flex-direction: column;
+    }
+
+    .article img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .content {
+        padding: 18px;
+    }
+
+    .timeline {
+        margin: 10px;
+    }
+
+    .contact-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cards {
+        width: 90%;
+        max-width: 320px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .content {
+        padding: 14px;
+    }
+}
     </style>
 </head>
 

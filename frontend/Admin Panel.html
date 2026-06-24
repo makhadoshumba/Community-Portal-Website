@@ -4,7 +4,7 @@
     <title>Community Portal | Admin Panel</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
+<style>
         body {
             margin: 0;
             font-family: system-ui;
@@ -131,6 +131,68 @@ body {
   }
 }
 
+/* =========================
+           MOBILE RESPONSIVENESS ONLY
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 12px;
+                text-align: center;
+            }
+
+            h2 {
+                font-size: 22px;
+                padding: 10px 18px;
+                text-align: center;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            td:nth-child(8) {
+                max-width: 140px;
+            }
+
+            button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            h2 {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            table {
+                font-size: 11px;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 12px;
+            }
+        }
+
 </style>
 
 <script>
@@ -170,6 +232,7 @@ body {
     });
 
 })();
+
 
 
 </script>
