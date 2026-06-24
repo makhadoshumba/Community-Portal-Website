@@ -60,7 +60,7 @@ body {
     position: sticky;
     top: 0;
     backdrop-filter: blur(10px);
-    flex-wrap: wrap; /* ✅ MOBILE FIX */
+    flex-wrap: wrap;
 }
 
 .navbar a {
@@ -89,7 +89,8 @@ body {
 }
 
 /* INPUTS */
-input, textarea {
+input,
+textarea {
     background-color: #111;
     color: #ccc;
     border: 1px solid #1114;
@@ -240,10 +241,10 @@ details:hover summary i {
 }
 
 /* =========================
-   ✅ MOBILE RESPONSIVENESS ONLY
+   MOBILE RESPONSIVENESS ONLY
    ========================= */
 
-   * {
+* {
     box-sizing: border-box;
 }
 
@@ -251,13 +252,12 @@ body {
     overflow-x: hidden;
 }
 
-/* Navbar responsiveness (no design change, just wrapping) */
-    .navbar {
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 12px;
-    } 
-   
+.navbar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px;
+}
+
 @media (max-width: 1024px) {
     .layout {
         flex-direction: column;
@@ -278,6 +278,7 @@ body {
 }
 
 @media (max-width: 600px) {
+
     .contact-hero h1 {
         font-size: 28px;
     }
@@ -288,6 +289,7 @@ body {
 
     .glow-box {
         width: 95%;
+        overflow: hidden;
     }
 
     .map-container {
@@ -302,6 +304,38 @@ body {
         justify-content: center;
         gap: 10px;
         font-size: 13px;
+    }
+
+    /* Prevent <pre> elements from causing horizontal scrolling */
+    .glow-box pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-x: hidden;
+        margin: 12px 0;
+    }
+
+    /* Override inline width:400px on mobile only */
+    .glow-box input,
+    .glow-box textarea {
+        width: 100% !important;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .glow-box input[type="date"] {
+        width: 100% !important;
+    }
+
+    .glow-box input[type="radio"] {
+        width: auto !important;
+    }
+
+    .glow-box button {
+        width: 100% !important;
+        max-width: 100%;
+        display: block;
+        margin: 10px 0;
+        box-sizing: border-box;
     }
 }
 
