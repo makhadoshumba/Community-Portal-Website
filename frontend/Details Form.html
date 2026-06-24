@@ -359,7 +359,6 @@ async function submitData() {
     const address = document.getElementById("addressInput").value.trim();
     const date = document.getElementById("dateInput").value;
 
-    // FIX: avoid accidental empty-string confusion
     const messageRaw = document.getElementById("messageInput").value;
     const message = messageRaw.trim();
 
@@ -386,7 +385,7 @@ async function submitData() {
     console.log("Sending data:", data);
 
     try {
-        const response = await fetch("${API_URL}/api/users", {
+        const response = await fetch(`${API_URL}/api/users`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -394,7 +393,25 @@ async function submitData() {
             body: JSON.stringify(data)
         });
 
-        const result = await response.json();
+        // ✅ FIX 1: check if request actually succeeded
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("HTTP Error:", errorText);
+            showMessage("Request failed", "error");
+            return;
+        }
+
+        // ✅ FIX 2: safe JSON parsing
+        const text = await response.text();
+
+        let result;
+        try {
+            result = JSON.parse(text);
+        } catch (e) {
+            console.error("Invalid JSON:", text);
+            showMessage("Server error", "error");
+            return;
+        }
 
         showMessage(result.message, "success");
         clearForm();
@@ -405,7 +422,7 @@ async function submitData() {
     }
 }
 
-// CLEAR FORM (FIXED)
+// CLEAR FORM (UNCHANGED)
 function clearForm() {
 
     document.getElementById("nameInput").value = "";
@@ -419,7 +436,7 @@ function clearForm() {
     document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 }
 
-// NOTIFICATION SYSTEM
+// NOTIFICATION SYSTEM (UNCHANGED)
 function showMessage(message, type) {
 
     let toast = document.getElementById("toast");
@@ -434,12 +451,10 @@ function showMessage(message, type) {
     toast.textContent = message;
     toast.className = "toast " + type;
 
-    // trigger animation
     setTimeout(() => {
         toast.classList.add("show");
     }, 10);
 
-    // hide after 3 seconds
     setTimeout(() => {
         toast.classList.remove("show");
 
