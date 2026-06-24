@@ -293,6 +293,7 @@ body {
     }
 
     .map-container {
+        width: 95%;
         height: 350px;
     }
 
@@ -306,17 +307,15 @@ body {
         font-size: 13px;
     }
 
-    /* Prevent <pre> elements from causing horizontal scrolling */
+    /* Keep the form structure exactly the same */
     .glow-box pre {
-        white-space: pre-wrap;
-        word-break: break-word;
         overflow-x: hidden;
-        margin: 12px 0;
     }
 
-    /* Override inline width:400px on mobile only */
-    .glow-box input,
-    .glow-box textarea {
+    /* Override inline width:400px ONLY on phones */
+    .glow-box input:not([type="radio"]),
+    .glow-box textarea,
+    .glow-box button {
         width: 100% !important;
         max-width: 100%;
         box-sizing: border-box;
@@ -328,14 +327,6 @@ body {
 
     .glow-box input[type="radio"] {
         width: auto !important;
-    }
-
-    .glow-box button {
-        width: 100% !important;
-        max-width: 100%;
-        display: block;
-        margin: 10px 0;
-        box-sizing: border-box;
     }
 }
 
