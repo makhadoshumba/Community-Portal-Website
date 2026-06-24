@@ -506,32 +506,32 @@ if (adminSearchInput) {
                 const password = admin.Password || admin.password || "-";
                 const role = (admin.Role || admin.role || "-").trim();
 
-                adminBody.innerHTML += `
-                    <tr>
-                        <td>${id ?? "-"}</td>
-                        <td>${username}</td>
-                        <td>${password}</td>
-                        <td>${role}</td>
+adminBody.innerHTML += `
+                <tr>
+                    <td>${id ?? "-"}</td>
+                    <td>${username}</td>
+                    <td>${password}</td>
+                    <td>${role}</td>
 
-                        <td class="actions">
+                    <td class="actions">
                         <button class="editBtn"
-                           data-id="${id}"
-                           data-username="${encodeURIComponent(username)}"
-                           data-password="${encodeURIComponent(password)}"
-                           data-role="${encodeURIComponent(role)}"
-                           onclick="handleEditAdmin(this)">
-                           Edit
+                            data-id="${id}"
+                            data-username="${encodeURIComponent(username)}"
+                            data-password="${encodeURIComponent(password)}"
+                            data-role="${encodeURIComponent(role)}"
+                            onclick="handleEditAdmin(this)">
+                            Edit
                         </button>
-                        </td>
+                    </td>
 
-                        <td class="actions">
-                            ${
-                                role.toLowerCase() === "superadmin"
-                                    ? "🔒"
-                                    : `<button class="deleteBtn" onclick="deleteAdmin(${id})">Delete</button>`
-                            }
-                        </td>
-                    </tr>
+                    <td class="actions">
+                        ${
+                            role.toLowerCase() === "superadmin"
+                                ? "🔒"
+                                : `<button class="deleteBtn" onclick="deleteAdmin(${id})">Delete</button>`
+                        }
+                    </td>
+                </tr>
                 `;
             });
 
@@ -638,7 +638,7 @@ async function loadDashboard() {
             const password = admin.Password || admin.password || "-";
             const role = (admin.Role || admin.role || "-").trim();
 
-            adminBody.innerHTML += `
+adminBody.innerHTML += `
                 <tr>
                     <td>${id ?? "-"}</td>
                     <td>${username}</td>
@@ -646,14 +646,13 @@ async function loadDashboard() {
                     <td>${role}</td>
 
                     <td class="actions">
-                        <td class="actions">
                         <button class="editBtn"
-                           data-id="${id}"
-                           data-username="${encodeURIComponent(username)}"
-                           data-password="${encodeURIComponent(password)}"
-                           data-role="${encodeURIComponent(role)}"
-                           onclick="handleEditAdmin(this)">
-                           Edit
+                            data-id="${id}"
+                            data-username="${encodeURIComponent(username)}"
+                            data-password="${encodeURIComponent(password)}"
+                            data-role="${encodeURIComponent(role)}"
+                            onclick="handleEditAdmin(this)">
+                            Edit
                         </button>
                     </td>
 
