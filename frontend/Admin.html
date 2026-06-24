@@ -352,7 +352,48 @@ details:hover summary i {
 }
 
 
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+
+    display: none;
+
+    /* 🔥 hard-center fix */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    z-index: 999999;
+    color: #ccc;
+    font-family: system-ui;
+}
+
+.loading-overlay.show {
+    display: flex;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid #0EA5E9;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 </style>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
@@ -513,6 +554,9 @@ function togglePassword() {
 // ================= LOGIN FUNCTION =================
 async function login() {
 
+    const overlay = document.getElementById("loadingOverlay");
+    overlay.classList.add("show");
+
     const username = document.getElementById("username")?.value;
     const password = document.getElementById("password")?.value;
 
@@ -559,8 +603,9 @@ async function login() {
         console.error(error);
         showMessage("Cannot connect to server", "#ef4444");
     }
-}
 
+    overlay.classList.remove("show");
+}
 
 // ================= ENTER KEY LOGIN =================
 document.addEventListener("DOMContentLoaded", () => {
@@ -676,6 +721,11 @@ document.querySelectorAll("a").forEach(link => {
   });
 });
 </script>
+
+<div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Logging in...</p>
+</div>
 
 </body>
 </html>
