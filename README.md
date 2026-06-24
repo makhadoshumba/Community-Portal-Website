@@ -22,4 +22,4 @@ Here, I have created a full stack web app. This website is essentially a communi
 <br>
 <p><b>Project Architectural diagram:</b><p>
 
-<img src="frontend/Architectural diagram.jpg">
+<img style="'height: 200px;' 'width: 200px;'" src="frontend/Architectural diagram.jpg">
