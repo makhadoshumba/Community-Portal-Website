@@ -69,4 +69,4 @@ Community Portal Website
 <img src="frontend/Admin Page.jpg">
 
 <h3>Admin System Architecture (Admin Panel/Super Admin Panel)</h3>
-<img src="frontend/Super,admin panel.jpg"
+<img src="frontend/Super,admin panel.jpg">
