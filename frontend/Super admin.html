@@ -232,6 +232,21 @@ body {
   }
 }
 
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Navbar responsiveness (no design change, just wrapping) */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    }
+
 @media (max-width: 600px) {
 
     .navbar {
@@ -240,6 +255,8 @@ body {
     }
 
     .navbar a {
+        justify-content: center;
+        gap: 10px;
         font-size: 13px;
     }
 

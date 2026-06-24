@@ -327,6 +327,21 @@ body {
    MOBILE RESPONSIVENESS (ADDED ONLY)
    ========================= */
 
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Navbar responsiveness (no design change, just wrapping) */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+    } 
+
 @media (max-width: 900px) {
 
     .achievement,
@@ -350,11 +365,11 @@ body {
 
 @media (max-width: 600px) {
 
-    .navbar {
-        gap: 12px;
-        padding: 12px;
-  
-    }
+        .navbar {
+        justify-content: center;
+        gap: 10px;
+        font-size: 13px;
+        }
 
     .container h1 {
         font-size: 28px;
