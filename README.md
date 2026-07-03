@@ -65,7 +65,7 @@ Community Portal Website
 </pre>
 <br>
 <h3>Databse Table Entity Relationship Diagram:</h3>
-<img src="frontend/Screenshot(25).jpg" width="600" height="500">
+<img src="frontend/Screenshot (25).png" width="600" height="500">
 <br>
 <h3>Contact form architecture:</h3>
 <img src="frontend/Contact form.jpg" width="600" height="500">
