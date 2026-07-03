@@ -1,14 +1,14 @@
 # Mondoer Community Portal Website (Full Stack)
 Here, I have created a full stack web app. This website is essentially a community portal that connects people by giving them the latest alerts and also allowing them to voice any complains through a contact form. Along with this website I have also added a secure admin panel & super admin panel which can both be accessed through a <b>admin login page</b> in the website. 
 
-The intent behind the creation of the panels was to allow administrators to easily view these complaints through a dashboard connected to the database table where these messages are stored and furthermore, the super admin panel not only allows the administrator to view complaints it also gives allowance to see current admins through visualisation of the database table storing admin_users in a dashboard. The superadmin can also manipulate the database table on the dashboard by add or delete admin_users on this dashboard except themselves obviously. This is a portal for everyone.
+The intent behind the creation of the panels was to allow administrators to easily view these complaints through a dashboard connected to the database table where these messages are stored and furthermore, the super admin panel not only allows the administrator to view complaints it also gives allowance to see current admins through visualisation of the database table storing admin_users in a dashboard. The superadmin can also manipulate the database table on the dashboard by add or delete admin_users on this dashboard except themselves obviously. This is a solution for a community
 
 <h3>Full stack:</h3>
 <pre>
--Frontend (HTML/CSS/JS)
--Backend (Server.js/package.json/package-lock.json)
--Database (Tables)
--CI/CD (to connct everything)
+-Frontend (VERCEL[HTML/CSS/JS])
+-Backend (RENDER [Server.js/package.json/package-lock.json])
+-Database (AZURE SQL DATABSE [Tables])
+-CI/CD (Workflows[YAML])
 </pre>
 
 <h3>Technologies used:</h3>
