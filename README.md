@@ -27,7 +27,7 @@ The intent behind the creation of the panels was to allow administrators to easi
 ## Architecture
 <img src="frontend/Architectural diagram.jpg" width="600" height="500">
 <br>
-<h3>Project Structure:</h3>
+<h3>Project Folder Structure:</h3>
 <pre>
 Community Portal Website
 │
