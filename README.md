@@ -1,6 +1,7 @@
 # Mondoer Community Portal Website (Full Stack)
+### What is this?
 Here, I have created a full stack web app. This website is essentially a community portal that connects people by giving them the latest alerts and also allowing them to voice any complains through a contact form. Along with this website I have also added a secure admin panel & super admin panel which can both be accessed through a <b>admin login page</b> in the website. 
-
+### Why was it created?
 The intent behind the creation of the panels was to allow administrators to easily view these complaints through a dashboard connected to the database table where these messages are stored and furthermore, the super admin panel not only allows the administrator to view complaints it also gives allowance to see current admins through visualisation of the database table storing admin_users in a dashboard. The superadmin can also manipulate the database table on the dashboard by add or delete admin_users on this dashboard except themselves obviously. This is a solution for a community
 
 <h3>Full stack:</h3>
@@ -22,8 +23,8 @@ The intent behind the creation of the panels was to allow administrators to easi
 </pre>
 
 <br>
-<p><b>Project Architectural diagram:</b><p>
 
+## Architecture
 <img src="frontend/Architectural diagram.jpg" width="600" height="500">
 <br>
 <h3>Project Structure:</h3>
